@@ -1,0 +1,40 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Shows — Admin{% endblock %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">SHOWS</h2>
+  <a href="{% url 'admin_panel:show_add' %}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Schedule Show</a>
+</div>
+<div class="admin-table-wrap">
+  <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead><tr><th>Movie</th><th>Theatre / Screen</th><th>Date</th><th>Time</th><th>Price</th><th>Available</th><th>Occupancy</th></tr></thead>
+      <tbody>
+        {% for show in shows %}
+        <tr>
+          <td style="font-weight:600">{{ show.movie.title|truncatechars:25 }}</td>
+          <td style="font-size:.8rem;color:var(--text-muted)">{{ show.screen.theatre.name }} · {{ show.screen.name }}</td>
+          <td>{{ show.show_date|date:"d M Y" }}</td>
+          <td class="mono">{{ show.show_time|time:"H:i" }}</td>
+          <td class="mono">₹{{ show.ticket_price }}</td>
+          <td>
+            <span style="color:var(--accent-green)">{{ show.available_seats_count }}</span>
+            <span style="color:var(--text-muted)"> / {{ show.screen.total_seats }}</span>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="flex:1;height:6px;background:var(--bg-secondary);border-radius:3px;min-width:60px">
+                <div style="height:100%;border-radius:3px;background:{% if show.occupancy_percentage > 75 %}var(--accent-red){% elif show.occupancy_percentage > 40 %}#ffc107{% else %}var(--accent-green){% endif %};width:{{ show.occupancy_percentage }}%"></div>
+              </div>
+              <span class="mono" style="font-size:.75rem">{{ show.occupancy_percentage }}%</span>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No shows scheduled</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

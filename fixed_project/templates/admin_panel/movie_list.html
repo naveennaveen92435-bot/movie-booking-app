@@ -1,0 +1,78 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Movies — Admin{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">MOVIES</h2>
+  <a href="{% url 'admin_panel:movie_add' %}" class="btn btn-primary">
+    <i class="bi bi-plus-circle"></i> Add Movie
+  </a>
+</div>
+
+<div class="admin-table-wrap">
+  <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Poster</th>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>Duration</th>
+          <th>Rating</th>
+          <th>IMDb</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+        <tr>
+          <td>
+            <img src="{{ movie.get_poster_url }}" alt="{{ movie.title }}"
+                 style="width:40px;height:54px;object-fit:cover;border-radius:4px">
+          </td>
+          <td>
+            <div style="font-weight:600">{{ movie.title }}</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">{{ movie.director }}</div>
+          </td>
+          <td style="font-size:.8rem">
+            {% for cat in movie.categories.all %}
+            <span class="badge me-1" style="background:rgba(245,197,24,.1);color:var(--accent-gold);border:1px solid rgba(245,197,24,.3);font-weight:400">
+              {{ cat.get_name_display }}
+            </span>
+            {% endfor %}
+          </td>
+          <td class="mono" style="font-size:.8rem">{{ movie.duration_display }}</td>
+          <td><span class="badge bg-secondary">{{ movie.rating }}</span></td>
+          <td class="mono" style="color:var(--accent-gold)">⭐ {{ movie.imdb_score }}</td>
+          <td>
+            {% if movie.is_active %}
+            <span class="booking-status status-confirmed">Active</span>
+            {% else %}
+            <span class="booking-status status-cancelled">Inactive</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="d-flex gap-1">
+              <a href="{% url 'admin_panel:movie_edit' movie.id %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="{% url 'movies:movie_detail' movie.slug %}" target="_blank" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-eye"></i>
+              </a>
+              <form method="post" action="{% url 'admin_panel:movie_delete' movie.id %}"
+                    onsubmit="return confirm('Deactivate {{ movie.title }}?')">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">No movies found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

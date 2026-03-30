@@ -1,0 +1,1430 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="{% if request.user.is_authenticated and request.user.profile.dark_mode %}dark{% else %}light{% endif %}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BookMySeat — Smart Cinema Booking{% endblock %}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a26;
+      --bg-glass: rgba(26,26,38,0.85);
+      --accent-gold: #f5c518;
+      --accent-red: #e63946;
+      --accent-blue: #4cc9f0;
+      --accent-green: #06d6a0;
+      --text-primary: #f0f0f0;
+      --text-muted: #888;
+      --text-dim: #555;
+      --border: rgba(255,255,255,0.08);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.4);
+      --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --navbar-h: 72px;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f4f4f8;
+      --bg-secondary: #eaeaf0;
+      --bg-card: #ffffff;
+      --bg-glass: rgba(255,255,255,0.9);
+      --text-primary: #0a0a0f;
+      --text-muted: #666;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    h1, h2, h3 { font-family: var(--font-display); letter-spacing: 1px; }
+    h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+    h3 { font-size: clamp(1.4rem, 3vw, 2rem); }
+    a { color: var(--accent-gold); text-decoration: none; transition: var(--transition); }
+    a:hover { color: #ffd700; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-red); border-radius: 3px; }
+
+    /* ── Navbar ── */
+    #mainNav {
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      min-height: var(--navbar-h);
+      z-index: 1000;
+      padding: 8px 0;
+    }
+    .navbar-brand { display: flex; align-items: center; gap: 10px; text-decoration: none !important; padding: 4px 0; }
+    .brand-logo-svg { flex-shrink: 0; }
+    .brand-text-wrap { display: flex; flex-direction: column; line-height: 1; }
+    .brand-main { font-family: var(--font-display); font-size: 1.75rem; letter-spacing: 1px; line-height: 1; }
+    .brand-main .w { color: #ffffff; }
+    .brand-main .r { color: #e63946; }
+    .brand-tagline {
+      font-family: var(--font-body); font-size: 0.48rem;
+      letter-spacing: 3.5px; color: var(--accent-gold);
+      text-transform: uppercase; font-weight: 700;
+      margin-top: 3px; white-space: nowrap;
+    }
+    .navbar-toggler { border: 1px solid var(--border); }
+    .navbar-toggler i { color: var(--text-primary); font-size: 1.4rem; }
+    .nav-link {
+      color: var(--text-muted) !important; font-weight: 500;
+      font-size: 0.9rem; padding: 6px 12px !important;
+      border-radius: 8px; transition: var(--transition);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .nav-link:hover { color: var(--text-primary) !important; background: var(--border); }
+
+    /* ── City Selector Button ── */
+    .city-selector-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-primary); padding: 7px 14px;
+      border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); font-size: 0.875rem;
+      font-weight: 500; transition: var(--transition); white-space: nowrap;
+    }
+    .city-selector-btn:hover { border-color: var(--accent-red); color: var(--accent-red); background: rgba(230,57,70,0.06); }
+    .city-selector-btn i { font-size: 0.85rem; color: var(--accent-red); }
+    .city-selector-btn .chevron { font-size: 0.7rem; color: var(--text-muted); }
+
+    /* ── City Picker Modal ── */
+    .city-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 9997;
+      display: none; align-items: flex-start; justify-content: center;
+      padding-top: 60px;
+    }
+    .city-modal-overlay.show { display: flex; }
+    .city-modal {
+      background: #ffffff; color: #111;
+      border-radius: 16px; width: 90%; max-width: 860px;
+      max-height: 80vh; overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .city-modal-header { padding: 20px 24px 0; flex-shrink: 0; }
+    .city-search-box {
+      display: flex; align-items: center; gap: 12px;
+      border: 1.5px solid #ddd; border-radius: 10px;
+      padding: 12px 16px; margin-bottom: 12px;
+    }
+    .city-search-box i { color: #888; font-size: 1.1rem; }
+    .city-search-box input { border: none; outline: none; width: 100%; font-size: 1rem; color: #111; background: transparent; font-family: var(--font-body); }
+    .city-search-box input::placeholder { color: #aaa; }
+    .detect-location-btn {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--accent-red); font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; padding: 6px 0 14px;
+      border: none; background: none; font-family: var(--font-body);
+    }
+    .detect-location-btn:hover { opacity: 0.8; }
+    .city-modal-body { overflow-y: auto; padding: 0 24px 24px; flex: 1; }
+    .city-modal-body::-webkit-scrollbar { width: 4px; }
+    .city-modal-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+    .city-section-title { font-size: 0.85rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; margin: 16px 0 14px; }
+    .popular-cities-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px; }
+    @media (max-width: 600px) { .popular-cities-grid { grid-template-columns: repeat(3, 1fr); } }
+    .popular-city-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 8px; border-radius: 10px; cursor: pointer;
+      transition: all 0.2s; border: 1.5px solid transparent;
+    }
+    .popular-city-item:hover { background: #fff5f5; border-color: var(--accent-red); }
+    .popular-city-item.active { background: #fff0f0; border-color: var(--accent-red); }
+    .city-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    .popular-city-item span { font-size: 0.8rem; font-weight: 600; color: #222; text-align: center; }
+    .popular-city-item.active span { color: var(--accent-red); }
+    .other-cities-divider { border: none; border-top: 1px solid #eee; margin: 8px 0 16px; }
+    .other-cities-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px 8px; }
+    @media (max-width: 600px) { .other-cities-grid { grid-template-columns: repeat(2, 1fr); } }
+    .other-city-item { padding: 7px 6px; font-size: 0.82rem; color: #555; cursor: pointer; border-radius: 6px; transition: all 0.15s; }
+    .other-city-item:hover { color: var(--accent-red); background: #fff5f5; }
+    .hide-cities-btn { display: block; text-align: center; color: var(--accent-red); font-size: 0.875rem; font-weight: 600; cursor: pointer; padding: 14px; border-top: 1px solid #eee; margin-top: 8px; }
+    .hide-cities-btn:hover { background: #fff5f5; }
+
+    /* ══════════════════════════════════════
+       CITY MOVIES POPUP — NEW ADDITION
+    ══════════════════════════════════════ */
+    .city-movies-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9998;
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .city-movies-overlay.show { display: flex; }
+
+    .city-movies-popup {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%; max-width: 980px;
+      max-height: 88vh;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      animation: popupIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popupIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .city-movies-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-between; flex-shrink: 0;
+      background: linear-gradient(135deg,
+        rgba(230,57,70,0.08) 0%,
+        rgba(10,10,15,0) 100%);
+    }
+    .city-movies-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem; letter-spacing: 1px;
+    }
+    .city-movies-title .city-highlight { color: var(--accent-red); }
+    .city-movies-subtitle {
+      font-size: 0.82rem; color: var(--text-muted); margin-top: 5px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .city-movies-close {
+      width: 40px; height: 40px;
+      background: rgba(230,57,70,0.1);
+      border: 1px solid rgba(230,57,70,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem; color: var(--accent-red);
+      transition: var(--transition); flex-shrink: 0;
+    }
+    .city-movies-close:hover { background: var(--accent-red); color: #fff; transform: rotate(90deg); }
+
+    .city-movies-body { overflow-y: auto; padding: 24px 28px; flex: 1; }
+    .city-movies-body::-webkit-scrollbar { width: 4px; }
+    .city-movies-body::-webkit-scrollbar-thumb { background: var(--accent-red); border-radius: 2px; }
+
+    .city-movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 600px) {
+      .city-movies-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+    }
+
+    .city-movie-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden; cursor: pointer;
+      transition: var(--transition); position: relative;
+    }
+    .city-movie-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(230,57,70,0.5);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.45);
+    }
+    .city-movie-poster-wrap {
+      position: relative; aspect-ratio: 2/3; overflow: hidden;
+    }
+    .city-movie-poster {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.35s ease;
+    }
+    .city-movie-card:hover .city-movie-poster { transform: scale(1.06); }
+
+    .city-movie-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(10,10,15,0.95) 0%,
+        transparent 55%);
+      opacity: 0; transition: var(--transition);
+      display: flex; align-items: flex-end; padding: 10px;
+    }
+    .city-movie-card:hover .city-movie-overlay { opacity: 1; }
+    .city-movie-book-btn {
+      width: 100%; padding: 7px;
+      background: var(--accent-red); color: #fff;
+      border: none; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; font-family: var(--font-body);
+    }
+
+    .city-movie-badge {
+      position: absolute; top: 8px; left: 8px;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(4px);
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+      font-size: 0.68rem; padding: 2px 7px;
+      border-radius: 20px;
+      border: 1px solid rgba(245,197,24,0.3);
+    }
+
+    .city-movie-info { padding: 10px 10px 12px; }
+    .city-movie-name {
+      font-weight: 600; font-size: 0.83rem;
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .city-movie-meta {
+      font-size: 0.72rem; color: var(--text-muted);
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .city-movie-genre {
+      background: rgba(230,57,70,0.1);
+      color: var(--accent-red);
+      padding: 1px 7px; border-radius: 20px;
+      font-size: 0.68rem;
+    }
+
+    .city-movies-footer {
+      padding: 16px 28px 20px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-between; flex-shrink: 0;
+    }
+
+    /* Loading state */
+    .city-loading {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 70px 20px; gap: 18px;
+    }
+    .city-loading-spinner {
+      width: 50px; height: 50px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent-red);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ══ END CITY MOVIES POPUP ══ */
+
+    /* ── Search ── */
+    .nav-search { flex: 0 1 380px; }
+    .search-wrap { position: relative; display: flex; align-items: center; }
+    .search-wrap i { position: absolute; left: 12px; color: var(--text-muted); pointer-events: none; }
+    .search-wrap input { width: 100%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); padding: 9px 12px 9px 36px; border-radius: 30px; font-size: 0.875rem; outline: none; transition: var(--transition); }
+    .search-wrap input:focus { border-color: var(--accent-red); box-shadow: 0 0 0 3px rgba(230,57,70,0.15); }
+    .search-wrap input::placeholder { color: var(--text-dim); }
+    .search-dropdown { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); z-index: 9999; box-shadow: var(--shadow); overflow: hidden; max-height: 380px; overflow-y: auto; }
+    .search-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; transition: var(--transition); }
+    .search-item:hover { background: var(--bg-secondary); }
+    .search-item img { width: 36px; height: 50px; object-fit: cover; border-radius: 4px; }
+    .search-item .movie-title { font-weight: 600; font-size: 0.9rem; }
+    .search-item .movie-meta { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── Avatar ── */
+    .avatar-circle { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--accent-red); color: #fff; font-weight: 700; border-radius: 50%; font-size: 0.8rem; margin-right: 6px; }
+
+    /* ── Notification badge ── */
+    .notif-badge { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; border: 2px solid var(--bg-primary); }
+    .notif-dropdown { min-width: 320px; max-height: 400px; overflow-y: auto; }
+    .notif-item { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .notif-item.unread { background: rgba(230,57,70,0.05); }
+
+    /* ── Dropdowns ── */
+    .dropdown-menu { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .dropdown-item { color: var(--text-primary); padding: 9px 16px; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; border-radius: 6px; margin: 2px 4px; }
+    .dropdown-item:hover, .dropdown-item:focus { background: var(--bg-secondary); color: var(--text-primary); }
+    .dropdown-divider { border-color: var(--border); }
+
+    /* ── Buttons ── */
+    .btn-primary { background: var(--accent-red); border-color: var(--accent-red); color: #fff; font-weight: 600; border-radius: 8px; padding: 9px 20px; transition: var(--transition); }
+    .btn-primary:hover { background: #c1121f; border-color: #c1121f; color: #fff; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(230,57,70,0.35); }
+    .btn-outline-primary { border-color: var(--accent-gold); color: var(--accent-gold); border-radius: 8px; }
+    .btn-outline-primary:hover { background: var(--accent-gold); color: #000; }
+    .btn-outline-light { border-color: var(--border); color: var(--text-primary); border-radius: 8px; }
+    .btn-outline-light:hover { background: var(--bg-card); color: var(--text-primary); }
+    .btn-danger { background: var(--accent-red); border-color: var(--accent-red); border-radius: 8px; }
+
+    /* ── Cards ── */
+    .glass-card { background: var(--bg-glass); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .movie-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: var(--transition); cursor: pointer; position: relative; }
+    .movie-card:hover { transform: translateY(-6px); border-color: rgba(230,57,70,0.4); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+    .movie-card .poster-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
+    .movie-card .poster-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .movie-card:hover .poster-wrap img { transform: scale(1.06); }
+    .movie-card .poster-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, transparent 50%); opacity: 0; transition: var(--transition); display: flex; align-items: flex-end; padding: 16px; }
+    .movie-card:hover .poster-overlay { opacity: 1; }
+    .movie-card .overlay-actions { display: flex; gap: 8px; width: 100%; }
+    .movie-card .overlay-actions .btn { flex: 1; font-size: 0.8rem; padding: 7px; }
+    .movie-card .badge-rating { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); color: var(--accent-gold); font-family: var(--font-mono); font-size: 0.75rem; padding: 3px 8px; border-radius: 20px; display: flex; align-items: center; gap: 3px; border: 1px solid rgba(245,197,24,0.3); }
+    .movie-card .badge-featured { position: absolute; top: 10px; right: 10px; background: var(--accent-red); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .movie-card .card-info { padding: 14px; }
+    .movie-card .movie-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .movie-card .movie-meta { font-size: 0.75rem; color: var(--text-muted); display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── Category Chips ── */
+    .category-nav { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 0; }
+    .category-nav::-webkit-scrollbar { display: none; }
+    .cat-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 500; white-space: nowrap; cursor: pointer; border: 1.5px solid var(--border); color: var(--text-muted); background: var(--bg-card); transition: var(--transition); text-decoration: none; }
+    .cat-chip:hover, .cat-chip.active { border-color: var(--accent-red); color: var(--accent-red); background: rgba(230,57,70,0.08); }
+
+    /* ── Hero Slider ── */
+    .hero-section { position: relative; height: 75vh; min-height: 500px; overflow: hidden; }
+    .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.6) 50%, transparent 100%); display: flex; align-items: center; }
+    .hero-content { max-width: 560px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(230,57,70,0.15); border: 1px solid rgba(230,57,70,0.4); color: var(--accent-red); padding: 5px 14px; border-radius: 30px; font-size: 0.8rem; font-weight: 500; margin-bottom: 16px; }
+    .hero-title { font-family: var(--font-display); line-height: 1; margin-bottom: 12px; }
+    .hero-meta { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .hero-meta span { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+    .hero-desc { font-size: 0.9rem; color: rgba(240,240,240,0.75); margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .hero-dots { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+    .hero-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; transition: var(--transition); border: none; padding: 0; }
+    .hero-dot.active { background: var(--accent-red); width: 24px; border-radius: 4px; }
+
+    /* ── Section Headings ── */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .section-title { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 1px; position: relative; }
+    .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent-red); border-radius: 2px; margin-top: 6px; }
+    .section-link { font-size: 0.85rem; color: var(--accent-gold); }
+    .ai-banner { background: linear-gradient(135deg, rgba(230,57,70,0.08) 0%, rgba(76,201,240,0.05) 100%); border: 1px solid rgba(230,57,70,0.2); border-radius: var(--radius-lg); padding: 16px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .ai-icon { font-size: 1.8rem; }
+    .ai-label { font-size: 0.75rem; color: var(--accent-red); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .ai-desc { font-size: 0.875rem; color: var(--text-muted); }
+
+    /* ── Seat Map ── */
+    .screen-indicator { background: linear-gradient(to bottom, rgba(230,57,70,0.3), transparent); border-top: 3px solid var(--accent-red); text-align: center; padding: 10px; border-radius: 8px 8px 0 0; font-size: 0.75rem; color: var(--accent-red); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; }
+    .seat-grid { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .seat-row { display: flex; align-items: center; gap: 6px; }
+    .row-label { width: 24px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-align: right; }
+    .seat { width: 34px; height: 30px; border-radius: 6px 6px 2px 2px; border: 1.5px solid transparent; cursor: pointer; transition: var(--transition); font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 500; position: relative; }
+    .seat::before { content: ''; position: absolute; top: -4px; left: 5px; right: 5px; height: 3px; background: inherit; border-radius: 2px; filter: brightness(1.2); }
+    .seat.available { background: #1e3a2a; border-color: var(--accent-green); color: var(--accent-green); }
+    .seat.available:hover { background: var(--accent-green); color: #000; transform: scale(1.1); }
+    .seat.booked { background: #2a1a1a; border-color: var(--accent-red); color: var(--accent-red); cursor: not-allowed; }
+    .seat.hold { background: #2a2510; border-color: #ffc107; color: #ffc107; cursor: not-allowed; }
+    .seat.selected { background: var(--accent-red); border-color: #ff6b7a; color: #fff; transform: scale(1.1); }
+    .seat.ai-suggested { border-color: var(--accent-blue); box-shadow: 0 0 10px rgba(76,201,240,0.4); }
+    .seat-legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-muted); }
+    .legend-dot { width: 14px; height: 14px; border-radius: 3px; }
+
+    /* ── Hold Timer ── */
+    .hold-timer { background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; font-size: 0.875rem; }
+    .timer-display { font-family: var(--font-mono); font-size: 1.2rem; color: var(--accent-red); font-weight: 600; }
+    .timer-display.urgent { animation: pulse 1s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* ── Payment ── */
+    .payment-method-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius); padding: 16px 20px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px; }
+    .payment-method-card.selected { border-color: var(--accent-red); background: rgba(230,57,70,0.05); }
+    .payment-method-card:hover { border-color: rgba(230,57,70,0.5); }
+    .payment-icon { font-size: 1.8rem; }
+    .payment-label { font-weight: 600; font-size: 0.9rem; }
+    .payment-sublabel { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── Order Summary ── */
+    .order-summary { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; position: sticky; top: calc(var(--navbar-h) + 16px); }
+    .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.9rem; }
+    .summary-row.total { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 16px; font-size: 1.1rem; font-weight: 700; }
+    .summary-row .amount { font-family: var(--font-mono); color: var(--accent-gold); }
+
+    /* ── Ticket ── */
+    .ticket-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; max-width: 520px; margin: 0 auto; }
+    .ticket-header { background: linear-gradient(135deg, #1a0a0a, #2a1010); padding: 28px 28px 20px; border-bottom: 2px dashed var(--border); position: relative; }
+    .ticket-header::before, .ticket-header::after { content: ''; position: absolute; bottom: -14px; width: 28px; height: 28px; background: var(--bg-primary); border-radius: 50%; border: 2px dashed var(--border); }
+    .ticket-header::before { left: -14px; }
+    .ticket-header::after { right: -14px; }
+    .ticket-body { padding: 28px; }
+    .ticket-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .ticket-info-item .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .ticket-info-item .value { font-weight: 600; font-size: 0.95rem; margin-top: 2px; }
+    .ticket-qr { text-align: center; padding: 16px; background: var(--bg-secondary); border-radius: var(--radius); }
+    .ticket-qr img { width: 160px; height: 160px; border-radius: 8px; }
+    .ticket-seats { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .seat-tag { background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3); color: var(--accent-red); padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-family: var(--font-mono); }
+
+    /* ── Profile ── */
+    .profile-header { background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; display: flex; gap: 24px; align-items: center; }
+    .profile-avatar { width: 80px; height: 80px; background: var(--accent-red); color: #fff; font-size: 2rem; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .booking-history-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; display: flex; gap: 16px; align-items: center; transition: var(--transition); margin-bottom: 12px; }
+    .booking-history-item:hover { border-color: rgba(230,57,70,0.3); }
+    .booking-poster { width: 55px; height: 75px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    .booking-status { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .status-confirmed { background: rgba(6,214,160,0.15); color: var(--accent-green); }
+    .status-cancelled { background: rgba(230,57,70,0.15); color: var(--accent-red); }
+    .status-refunded { background: rgba(76,201,240,0.15); color: var(--accent-blue); }
+
+    /* ── Admin ── */
+    .admin-sidebar { width: 240px; min-height: 100vh; background: var(--bg-secondary); border-right: 1px solid var(--border); padding: 24px 0; position: fixed; top: var(--navbar-h); left: 0; overflow-y: auto; z-index: 100; }
+    .admin-content { margin-left: 240px; padding: 28px; }
+    .admin-nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; color: var(--text-muted); font-size: 0.875rem; font-weight: 500; transition: var(--transition); border-left: 3px solid transparent; }
+    .admin-nav-item:hover, .admin-nav-item.active { color: var(--accent-red); background: rgba(230,57,70,0.05); border-left-color: var(--accent-red); }
+    .admin-nav-group { padding: 12px 20px 6px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; position: relative; overflow: hidden; transition: var(--transition); }
+    .stat-card:hover { border-color: rgba(230,57,70,0.3); transform: translateY(-2px); }
+    .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--accent-color, var(--accent-red)); }
+    .stat-value { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 1px; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    .stat-icon { font-size: 2rem; opacity: 0.15; position: absolute; top: 16px; right: 20px; }
+    .stat-change { font-size: 0.78rem; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+    .stat-change.up { color: var(--accent-green); }
+    .stat-change.down { color: var(--accent-red); }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th { background: var(--bg-secondary); padding: 12px 14px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; text-align: left; }
+    .admin-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.875rem; vertical-align: middle; }
+    .admin-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .admin-table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+
+    /* ── Forms ── */
+    .form-control, .form-select { background: var(--bg-secondary); border: 1.5px solid var(--border); color: var(--text-primary); border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; transition: var(--transition); }
+    .form-control:focus, .form-select:focus { background: var(--bg-secondary); border-color: var(--accent-red); box-shadow: 0 0 0 3px rgba(230,57,70,0.15); color: var(--text-primary); }
+    .form-label { font-size: 0.85rem; font-weight: 500; margin-bottom: 6px; color: var(--text-muted); }
+    .form-control::placeholder { color: var(--text-dim); }
+
+    /* ── Movie Detail ── */
+    .movie-detail-hero { position: relative; background: var(--bg-secondary); min-height: 420px; overflow: hidden; }
+    .movie-detail-backdrop { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(20px) brightness(0.3); transform: scale(1.1); }
+    .movie-detail-content { position: relative; z-index: 1; padding: 48px 0; }
+    .movie-main-poster { width: 220px; border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 2px solid var(--border); }
+    .trailer-wrap { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius); background: #000; }
+    .trailer-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* ── Show Time Cards ── */
+    .show-time-card { display: inline-flex; flex-direction: column; align-items: center; padding: 12px 20px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: var(--transition); background: var(--bg-card); text-decoration: none; color: var(--text-primary); }
+    .show-time-card:hover, .show-time-card.selected { border-color: var(--accent-red); color: var(--accent-red); background: rgba(230,57,70,0.05); }
+    .show-time-card .time { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; }
+    .show-time-card .price { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .show-time-card .avail { font-size: 0.7rem; color: var(--accent-green); margin-top: 2px; }
+
+    /* ── Food Cards ── */
+    .food-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: var(--transition); }
+    .food-card:hover { border-color: rgba(230,57,70,0.3); }
+    .food-name { font-weight: 500; font-size: 0.9rem; }
+    .food-price { font-family: var(--font-mono); color: var(--accent-gold); font-size: 0.875rem; }
+    .qty-control { display: flex; align-items: center; gap: 8px; background: var(--bg-secondary); border-radius: 8px; padding: 4px 8px; }
+    .qty-btn { background: none; border: none; color: var(--text-primary); font-size: 1rem; cursor: pointer; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: var(--transition); }
+    .qty-btn:hover { background: var(--accent-red); color: #fff; }
+    .qty-display { font-family: var(--font-mono); min-width: 20px; text-align: center; font-size: 0.9rem; }
+
+    /* ── Voice Orb ── */
+    .voice-orb { width: 100px; height: 100px; background: radial-gradient(circle, rgba(230,57,70,0.3), rgba(230,57,70,0.05)); border: 2px solid var(--accent-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto; animation: voicePulse 1.5s ease-in-out infinite; cursor: pointer; }
+    @keyframes voicePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.4); } 50% { box-shadow: 0 0 0 20px rgba(230,57,70,0); } }
+
+    /* ── Auth ── */
+    .auth-card { max-width: 440px; margin: 80px auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; }
+    .auth-logo { font-family: var(--font-display); font-size: 2rem; letter-spacing: 2px; margin-bottom: 8px; }
+
+    /* ── Footer ── */
+    .site-footer { background: var(--bg-secondary); border-top: 1px solid var(--border); margin-top: 80px; }
+    .brand-xl { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 2px; }
+    .footer-heading { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a { color: var(--text-muted); font-size: 0.875rem; transition: var(--transition); }
+    .footer-links a:hover { color: var(--accent-red); }
+
+    /* ── Utilities ── */
+    .text-gold { color: var(--accent-gold); }
+    .text-accent { color: var(--accent-blue); }
+    .bg-card { background: var(--bg-card); }
+    .border-subtle { border: 1px solid var(--border); }
+    .rounded-xl { border-radius: var(--radius-lg); }
+    .mono { font-family: var(--font-mono); }
+    .page-section { padding: 60px 0; }
+    .page-section-sm { padding: 40px 0; }
+    .skeleton { background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-secondary) 50%, var(--bg-card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .admin-sidebar { display: none; }
+      .admin-content { margin-left: 0; padding: 16px; }
+      .hero-section { height: 55vh; }
+      .movie-main-poster { width: 140px; }
+      .seat { width: 28px; height: 25px; font-size: 0.55rem; }
+      .ticket-info-grid { grid-template-columns: 1fr; }
+      .profile-header { flex-direction: column; text-align: center; }
+      .brand-tagline { letter-spacing: 2px; font-size: 0.42rem; }
+      .city-selector-btn .city-name { display: none; }
+    }
+  </style>
+
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     CITY PICKER MODAL
+════════════════════════════════════════ -->
+<div class="city-modal-overlay" id="cityModalOverlay"
+     onclick="closeCityModal(event)">
+  <div class="city-modal" onclick="event.stopPropagation()">
+
+    <div class="city-modal-header">
+      <div class="city-search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" id="citySearchInput"
+               placeholder="Search for your city"
+               oninput="filterCities(this.value)">
+      </div>
+      <button class="detect-location-btn" onclick="detectLocation()">
+        <i class="bi bi-geo-alt-fill"></i> Detect my location
+      </button>
+    </div>
+
+    <div class="city-modal-body" id="cityModalBody">
+      <div id="popularCitiesSection">
+        <div class="city-section-title">Popular Cities</div>
+        <div class="popular-cities-grid">
+          <div class="popular-city-item" onclick="selectCity('Mumbai')">
+            <div class="city-icon">🏙️</div><span>Mumbai</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Kochi')">
+            <div class="city-icon">🌴</div><span>Kochi</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Delhi-NCR')">
+            <div class="city-icon">🕌</div><span>Delhi-NCR</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Bengaluru')">
+            <div class="city-icon">🏛️</div><span>Bengaluru</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Hyderabad')">
+            <div class="city-icon">🕍</div><span>Hyderabad</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Chandigarh')">
+            <div class="city-icon">🏗️</div><span>Chandigarh</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Ahmedabad')">
+            <div class="city-icon">🏯</div><span>Ahmedabad</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Pune')">
+            <div class="city-icon">🏰</div><span>Pune</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Chennai')">
+            <div class="city-icon">⛪</div><span>Chennai</span>
+          </div>
+          <div class="popular-city-item" onclick="selectCity('Kolkata')">
+            <div class="city-icon">🌉</div><span>Kolkata</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="other-cities-divider">
+
+      <div id="otherCitiesSection">
+        <div class="city-section-title">Other Cities</div>
+        <div class="other-cities-grid" id="otherCitiesGrid"></div>
+      </div>
+
+      <div class="hide-cities-btn" onclick="closeCityModalDirect()">
+        Hide all cities
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     CITY MOVIES POPUP  ← NEW
+════════════════════════════════════════ -->
+<div class="city-movies-overlay" id="cityMoviesOverlay"
+     onclick="closeCityMovies(event)">
+  <div class="city-movies-popup" onclick="event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="city-movies-header">
+      <div>
+        <div class="city-movies-title">
+          Movies in
+          <span class="city-highlight" id="cityMoviesTitle">Hyderabad</span>
+        </div>
+        <div class="city-movies-subtitle" id="cityMoviesSubtitle">
+          <span class="city-loading-spinner"
+                style="width:14px;height:14px;border-width:2px;
+                       display:inline-block;margin-right:6px"></span>
+          Loading movies…
+        </div>
+      </div>
+      <div class="city-movies-close" onclick="closeCityMoviesDirect()">
+        <i class="bi bi-x-lg"></i>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="city-movies-body">
+      <div id="cityMoviesContent">
+        <div class="city-loading">
+          <div class="city-loading-spinner"></div>
+          <div style="color:var(--text-muted);font-size:.9rem">
+            Finding movies near you…
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="city-movies-footer">
+      <div style="font-size:.82rem;color:var(--text-muted)">
+        <i class="bi bi-info-circle"></i>
+        Click any movie to view showtimes &amp; book tickets
+      </div>
+      <a id="viewAllMoviesBtn" href="/"
+         class="btn btn-primary btn-sm">
+        <i class="bi bi-film"></i> View All Movies
+      </a>
+    </div>
+
+  </div>
+</div>
+<!-- ════════════ END CITY MOVIES POPUP ════════════ -->
+
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+  <div class="container-xl">
+
+    <a class="navbar-brand" href="{% url 'movies:homepage' %}">
+      <svg class="brand-logo-svg" width="46" height="46"
+           viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+        <g transform="rotate(-10, 23, 23)">
+          <rect x="5" y="10" width="28" height="22" rx="3" fill="#cc0000"/>
+          <circle cx="5"  cy="21" r="3" fill="#0a0a0f"/>
+          <circle cx="33" cy="21" r="3" fill="#0a0a0f"/>
+          <line x1="5" y1="21" x2="33" y2="21"
+                stroke="#0a0a0f" stroke-width="1.5" stroke-dasharray="2,2"/>
+        </g>
+        <rect x="14" y="18" width="18" height="13" rx="3" fill="#8b0000"/>
+        <rect x="12" y="28" width="22" height="5"  rx="2" fill="#6b0000"/>
+        <rect x="12" y="18" width="3"  height="11" rx="1" fill="#6b0000"/>
+        <rect x="31" y="18" width="3"  height="11" rx="1" fill="#6b0000"/>
+        <text x="30" y="13" font-size="6" fill="#f5c518">★</text>
+        <text x="36" y="9"  font-size="5" fill="#f5c518">★</text>
+        <text x="34" y="16" font-size="4" fill="#f5c518">★</text>
+      </svg>
+      <div class="brand-text-wrap">
+        <div class="brand-main">
+          <span class="w">Book</span><span class="r">My</span><span class="w">Seat</span>
+        </div>
+        <div class="brand-tagline">Smart Cinema Booking System</div>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <div class="nav-search mx-auto">
+        <div class="search-wrap">
+          <i class="bi bi-search"></i>
+          <input type="text" id="liveSearch"
+                 placeholder="Search movies, cast…" autocomplete="off">
+          <div id="searchDropdown" class="search-dropdown d-none"></div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav ms-auto align-items-center gap-2">
+
+        <!-- City Button -->
+        <li class="nav-item">
+          <button class="city-selector-btn"
+                  onclick="openCityModal()"
+                  id="citySelectorBtn">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span class="city-name" id="selectedCityName">Hyderabad</span>
+            <i class="bi bi-chevron-down chevron"></i>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'movies:homepage' %}">
+            <i class="bi bi-film"></i> Movies
+          </a>
+        </li>
+
+        {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link text-warning"
+               href="{% url 'admin_panel:dashboard' %}">
+              <i class="bi bi-speedometer2"></i> Admin
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link position-relative"
+               href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-bell"></i>
+              <span class="notif-badge" id="notifBadge"
+                    style="display:none"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end notif-dropdown">
+              <li><h6 class="dropdown-header">Notifications</h6></li>
+              <div id="notifList">
+                <li><span class="dropdown-item-text text-muted small">
+                  Loading…</span></li>
+              </div>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle user-avatar-btn"
+               href="#" data-bs-toggle="dropdown">
+              <span class="avatar-circle">
+                {{ user.username|first|upper }}
+              </span>
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item"
+                   href="{% url 'accounts:profile' %}">
+                  <i class="bi bi-person"></i> My Profile
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <button class="dropdown-item" id="darkModeToggle">
+                  <i class="bi bi-moon-stars"></i>
+                  <span id="darkModeLabel">
+                    {% if request.user.profile.dark_mode %}
+                      Light Mode
+                    {% else %}
+                      Dark Mode
+                    {% endif %}
+                  </span>
+                </button>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-danger"
+                   href="{% url 'accounts:logout' %}">
+                  <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a class="btn btn-outline-light btn-sm"
+               href="{% url 'accounts:login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary btn-sm"
+               href="{% url 'accounts:register' %}">Sign Up</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── MESSAGES ──────────────────────────────────────── -->
+{% if messages %}
+<div class="toast-container position-fixed top-0 end-0 p-3"
+     style="z-index:9999">
+  {% for msg in messages %}
+  <div class="toast show align-items-center border-0
+    text-bg-{% if msg.tags == 'error' %}danger
+    {% elif msg.tags == 'success' %}success
+    {% elif msg.tags == 'warning' %}warning
+    {% else %}info{% endif %}" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">{{ msg }}</div>
+      <button type="button"
+              class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<!-- ── MAIN CONTENT ───────────────────────────────────── -->
+<main>{% block content %}{% endblock %}</main>
+
+
+<!-- ── FOOTER ────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container-xl">
+    <div class="row g-4 py-5">
+      <div class="col-lg-4">
+        <div class="brand-xl mb-3">
+          <span style="color:#fff">Book</span>
+          <span style="color:#e63946">My</span>
+          <span style="color:#fff">Seat</span>
+          <div style="font-size:.5rem;letter-spacing:3px;
+                      color:var(--accent-gold);
+                      font-family:'DM Sans',sans-serif;
+                      font-weight:700;margin-top:4px">
+            SMART CINEMA BOOKING SYSTEM
+          </div>
+        </div>
+        <p class="text-muted small">
+          The smart way to book movies. AI-powered seat recommendations,
+          instant QR tickets, and seamless payments.
+        </p>
+      </div>
+      <div class="col-lg-2">
+        <h6 class="footer-heading">Genres</h6>
+        <ul class="footer-links">
+          <li><a href="/?category=action">Action</a></li>
+          <li><a href="/?category=comedy">Comedy</a></li>
+          <li><a href="/?category=horror">Horror</a></li>
+          <li><a href="/?category=family">Family</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2">
+        <h6 class="footer-heading">Account</h6>
+        <ul class="footer-links">
+          <li><a href="{% url 'accounts:register' %}">Register</a></li>
+          <li><a href="{% url 'accounts:login' %}">Login</a></li>
+          <li><a href="{% url 'accounts:profile' %}">My Bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="footer-heading">Voice Booking</h6>
+        <p class="text-muted small">
+          Try saying: "Book 2 tickets for Inception tonight"
+        </p>
+        <button class="btn btn-outline-primary btn-sm"
+                id="footerVoiceBtn">
+          <i class="bi bi-mic"></i> Try Voice Booking
+        </button>
+      </div>
+    </div>
+    <hr class="border-secondary">
+    <p class="text-center text-muted small py-3">
+      © 2025 BookMySeat — Smart Cinema Booking System
+    </p>
+  </div>
+</footer>
+
+
+<!-- ── VOICE MODAL ───────────────────────────────────── -->
+<div class="modal fade" id="voiceModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content glass-card">
+      <div class="modal-body text-center py-5">
+        <div class="voice-orb mb-4" id="voiceOrb">
+          <i class="bi bi-mic-fill"></i>
+        </div>
+        <h4>Listening…</h4>
+        <p class="text-muted" id="voiceTranscript">
+          Say: "Book 2 tickets for [movie] on [date]"
+        </p>
+        <button class="btn btn-danger mt-3"
+                data-bs-dismiss="modal">Stop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// ALL CITIES
+// ═══════════════════════════════════════════════════════
+const ALL_OTHER_CITIES = [
+  "Aalo","Abohar","Abu Road","Achampet","Acharapakkam",
+  "Addanki","Adilabad","Adimali","Adipur","Adoni",
+  "Agar Malwa","Agartala","Agiripalli","Agra","Ahilyanagar (Ahmednagar)",
+  "Ahmedgarh","Ahore","Aizawl","Ajmer","Akbarpur",
+  "Akividu","Akluj","Akola","Akot","Alakode",
+  "Alangudi","Alangulam","Alappuzha","Alathur","Alibaug",
+  "Aligarh","Alipurduar","Allagadda","Almora","Aluva",
+  "Alwar","Ambala","Amravati","Amreli","Amritsar",
+  "Anand","Anantapur","Anekal","Angul","Anna Nagar",
+  "Ariyalur","Arrah","Asansol","Aurangabad","Ayodhya",
+  "Bagalkot","Bahadurgarh","Bahraich","Balasore","Ballari",
+  "Banda","Banswara","Bapatla","Barabanki","Baramati",
+  "Bardhaman","Bareilly","Barmer","Barnala","Basti",
+  "Bathinda","Belagavi","Bettiah","Bhagalpur","Bhandara",
+  "Bharatpur","Bharuch","Bhavnagar","Bhilai","Bhilwara",
+  "Bhimavaram","Bhopal","Bhubaneswar","Bidar","Bijapur",
+  "Bikaner","Bilaspur","Bokaro","Bongaigaon","Burdwan",
+  "Chandrapur","Chapra","Chikkamagaluru","Chitoor","Chittorgarh",
+  "Coimbatore","Cuddalore","Cuttack","Darbhanga","Davangere",
+  "Dehradun","Dewas","Dhanbad","Dharwad","Dhule",
+  "Dibrugarh","Dindigul","Durg","Eluru","Ernakulam",
+  "Erode","Etawah","Faizabad","Faridabad","Faridkot",
+  "Farrukhabad","Fatehpur","Firozabad","Firozpur","Gajapati",
+  "Gandhidham","Gandhinagar","Gaya","Ghaziabad","Ghazipur",
+  "Giridih","Godavari","Gondia","Gorakhpur","Gudivada",
+  "Gulbarga","Guntur","Gurgaon","Guwahati","Gwalior",
+  "Hajipur","Haldwani","Hapur","Haridwar","Hassan",
+  "Hisar","Hooghly","Hospet","Hubli","Imphal",
+  "Indore","Jabalpur","Jaipur","Jalandhar","Jalgaon",
+  "Jalna","Jammu","Jamnagar","Jamshedpur","Jhansi",
+  "Jodhpur","Jorhat","Junagadh","Kadapa","Kakinada",
+  "Kalyan","Kamarhati","Kancheepuram","Kannur","Kanpur",
+  "Karimnagar","Karnal","Karur","Kasaragod","Katni",
+  "Khammam","Kharagpur","Kolar","Kolhapur","Kota",
+  "Kozhikode","Krishna","Kurnool","Latur","Lucknow",
+  "Ludhiana","Madurai","Mangaluru","Mathura","Meerut",
+  "Mirzapur","Moradabad","Morbi","Muzaffarnagar","Muzaffarpur",
+  "Mysuru","Nagpur","Nanded","Nashik","Nellore",
+  "Noida","Palakkad","Palghar","Panaji","Patiala",
+  "Patna","Pondicherry","Raipur","Rajahmundry","Rajkot",
+  "Ranchi","Rewa","Rohtak","Rourkela","Sagar",
+  "Saharanpur","Salem","Sangli","Satara","Satna",
+  "Shillong","Shimla","Siliguri","Solapur","Srinagar",
+  "Surat","Thane","Thanjavur","Tiruchirappalli","Tirunelveli",
+  "Tirupati","Tiruppur","Tiruvallur","Trichur","Tumkur",
+  "Udaipur","Udupi","Ujjain","Vadodara","Valsad",
+  "Varanasi","Vellore","Vijayawada","Visakhapatnam",
+  "Vizianagaram","Warangal","Yamunanagar","Yelahanka","Zira"
+];
+
+// ═══════════════════════════════════════════════════════
+// CITY PICKER
+// ═══════════════════════════════════════════════════════
+let selectedCity = localStorage.getItem('selectedCity') || 'Hyderabad';
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('selectedCityName').textContent = selectedCity;
+  renderOtherCities(ALL_OTHER_CITIES);
+  highlightActiveCity(selectedCity);
+});
+
+function renderOtherCities(cities) {
+  document.getElementById('otherCitiesGrid').innerHTML =
+    cities.map(c =>
+      `<div class="other-city-item" onclick="selectCity('${c}')">${c}</div>`
+    ).join('');
+}
+
+function openCityModal() {
+  document.getElementById('cityModalOverlay').classList.add('show');
+  setTimeout(() =>
+    document.getElementById('citySearchInput').focus(), 100);
+  highlightActiveCity(selectedCity);
+}
+
+function closeCityModal(e) {
+  if (e.target === document.getElementById('cityModalOverlay'))
+    closeCityModalDirect();
+}
+
+function closeCityModalDirect() {
+  document.getElementById('cityModalOverlay').classList.remove('show');
+  document.getElementById('citySearchInput').value = '';
+  document.getElementById('otherCitiesSection')
+    .querySelector('.city-section-title').textContent = 'Other Cities';
+  document.getElementById('popularCitiesSection').style.display = '';
+  renderOtherCities(ALL_OTHER_CITIES);
+}
+
+function highlightActiveCity(city) {
+  document.querySelectorAll('.popular-city-item').forEach(item => {
+    item.classList.toggle('active',
+      item.querySelector('span').textContent.trim() === city);
+  });
+}
+
+function filterCities(query) {
+  const q = query.trim().toLowerCase();
+  const popSec = document.getElementById('popularCitiesSection');
+  const title  = document.getElementById('otherCitiesSection')
+                          .querySelector('.city-section-title');
+  if (!q) {
+    popSec.style.display = '';
+    title.textContent = 'Other Cities';
+    renderOtherCities(ALL_OTHER_CITIES);
+    return;
+  }
+  popSec.style.display = 'none';
+  title.textContent = 'Search Results';
+  const popular = ['Mumbai','Kochi','Delhi-NCR','Bengaluru','Hyderabad',
+                   'Chandigarh','Ahmedabad','Pune','Chennai','Kolkata'];
+  const matched = [...new Set([
+    ...popular.filter(c => c.toLowerCase().includes(q)),
+    ...ALL_OTHER_CITIES.filter(c => c.toLowerCase().includes(q))
+  ])];
+  renderOtherCities(matched.length ? matched : ['No cities found']);
+}
+
+// ── Select city → close picker → show movies popup ──
+function selectCity(city) {
+  selectedCity = city;
+  localStorage.setItem('selectedCity', city);
+  document.getElementById('selectedCityName').textContent = city;
+  closeCityModalDirect();
+  showCityMovies(city);          // ← triggers the movies popup
+}
+
+// ═══════════════════════════════════════════════════════
+// CITY MOVIES POPUP  ← NEW LOGIC
+// ═══════════════════════════════════════════════════════
+function showCityMovies(city) {
+  // Reset header
+  document.getElementById('cityMoviesTitle').textContent = city;
+  document.getElementById('cityMoviesSubtitle').innerHTML =
+    `<span class="city-loading-spinner"
+           style="width:14px;height:14px;border-width:2px;
+                  display:inline-block;margin-right:6px"></span>
+     Loading movies in ${city}…`;
+
+  // Reset content to loader
+  document.getElementById('cityMoviesContent').innerHTML = `
+    <div class="city-loading">
+      <div class="city-loading-spinner"></div>
+      <div style="color:var(--text-muted);font-size:.9rem">
+        Finding movies in <strong>${city}</strong>…
+      </div>
+    </div>`;
+
+  // Update "View All" link
+  document.getElementById('viewAllMoviesBtn').href =
+    `/?city=${encodeURIComponent(city)}`;
+
+  // Show the overlay
+  document.getElementById('cityMoviesOverlay').classList.add('show');
+
+  // Fetch movies from backend
+  fetch(`/api/movies-by-city/?city=${encodeURIComponent(city)}`)
+    .then(r => r.json())
+    .then(data => renderCityMovies(city, data.movies || []))
+    .catch(() => {
+      // Fallback: show top movies from search API
+      fetch('/api/search/?q=the')
+        .then(r => r.json())
+        .then(data => renderCityMovies(city, data.results || []))
+        .catch(() => renderCityMovies(city, []));
+    });
+}
+
+function renderCityMovies(city, movies) {
+  const count = movies.length;
+
+  // Update subtitle
+  document.getElementById('cityMoviesSubtitle').innerHTML =
+    count > 0
+      ? `<i class="bi bi-film"></i> &nbsp;${count} movie${count > 1 ? 's' : ''} showing in ${city}`
+      : `<i class="bi bi-info-circle"></i> &nbsp;No shows listed for ${city}`;
+
+  if (!count) {
+    document.getElementById('cityMoviesContent').innerHTML = `
+      <div style="text-align:center;padding:70px 20px">
+        <div style="font-size:4rem;margin-bottom:16px">🎬</div>
+        <div style="font-size:1.1rem;font-weight:600;margin-bottom:8px">
+          No movies listed for ${city}
+        </div>
+        <div style="color:var(--text-muted);font-size:.875rem">
+          Check back soon or browse all available movies below
+        </div>
+        <a href="/" class="btn btn-primary mt-4">
+          Browse All Movies
+        </a>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('cityMoviesContent').innerHTML = `
+    <div class="city-movies-grid">
+      ${movies.map(m => `
+        <div class="city-movie-card"
+             onclick="location.href='/movie/${m.slug}/'">
+
+          <div class="city-movie-poster-wrap">
+            <img class="city-movie-poster"
+                 src="${m.poster}"
+                 alt="${m.title}"
+                 onerror="this.src='/static/images/default_poster.jpg'">
+            <div class="city-movie-badge">⭐ ${m.rating}</div>
+            <div class="city-movie-overlay">
+              <button class="city-movie-book-btn">
+                🎟 Book Now
+              </button>
+            </div>
+          </div>
+
+          <div class="city-movie-info">
+            <div class="city-movie-name">${m.title}</div>
+            <div class="city-movie-meta">
+              <span class="city-movie-genre">
+                ${m.genre ? m.genre.split(',')[0].trim() : 'Movie'}
+              </span>
+            </div>
+          </div>
+
+        </div>`
+      ).join('')}
+    </div>`;
+}
+
+function closeCityMovies(e) {
+  if (e.target === document.getElementById('cityMoviesOverlay'))
+    closeCityMoviesDirect();
+}
+
+function closeCityMoviesDirect() {
+  document.getElementById('cityMoviesOverlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// DETECT LOCATION
+// ═══════════════════════════════════════════════════════
+function detectLocation() {
+  if (!navigator.geolocation) {
+    alert('Geolocation not supported by your browser.');
+    return;
+  }
+  const btn = document.querySelector('.detect-location-btn');
+  btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Detecting…';
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`)
+        .then(r => r.json())
+        .then(data => {
+          const city = data.address.city || data.address.town ||
+                       data.address.county || 'Your Location';
+          btn.innerHTML = '<i class="bi bi-geo-alt-fill"></i> Detect my location';
+          selectCity(city);
+        })
+        .catch(() => {
+          btn.innerHTML = '<i class="bi bi-geo-alt-fill"></i> Detect my location';
+          alert('Could not detect city. Please select manually.');
+        });
+    },
+    () => {
+      btn.innerHTML = '<i class="bi bi-geo-alt-fill"></i> Detect my location';
+      alert('Location access denied. Please select manually.');
+    }
+  );
+}
+
+// Close both modals on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeCityModalDirect();
+    closeCityMoviesDirect();
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// LIVE SEARCH
+// ═══════════════════════════════════════════════════════
+(function () {
+  const input    = document.getElementById('liveSearch');
+  const dropdown = document.getElementById('searchDropdown');
+  if (!input || !dropdown) return;
+  let debounceTimer;
+  input.addEventListener('input', function () {
+    clearTimeout(debounceTimer);
+    const q = this.value.trim();
+    if (q.length < 2) { dropdown.classList.add('d-none'); return; }
+    debounceTimer = setTimeout(() => {
+      fetch(`/api/search/?q=${encodeURIComponent(q)}`)
+        .then(r => r.json())
+        .then(data => {
+          dropdown.innerHTML = !data.results.length
+            ? '<div class="search-item"><span style="color:var(--text-muted);font-size:.85rem">No results found</span></div>'
+            : data.results.map(m => `
+                <div class="search-item"
+                     onclick="location.href='/movie/${m.slug}/'">
+                  <img src="${m.poster}" alt="${m.title}"
+                       onerror="this.src='/static/images/default_poster.jpg'">
+                  <div class="movie-info">
+                    <div class="movie-title">${m.title}</div>
+                    <div class="movie-meta">⭐ ${m.rating} · ${m.genre}</div>
+                  </div>
+                </div>`).join('');
+          dropdown.classList.remove('d-none');
+        }).catch(() => dropdown.classList.add('d-none'));
+    }, 300);
+  });
+  document.addEventListener('click', e => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target))
+      dropdown.classList.add('d-none');
+  });
+})();
+
+// ═══════════════════════════════════════════════════════
+// DARK MODE
+// ═══════════════════════════════════════════════════════
+(function () {
+  const btn = document.getElementById('darkModeToggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    fetch('/accounts/api/toggle-dark-mode/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': getCookie('csrftoken'),
+        'Content-Type': 'application/json'
+      }
+    }).then(r => r.json()).then(data => {
+      document.documentElement.setAttribute(
+        'data-theme', data.dark_mode ? 'dark' : 'light');
+      const label = document.getElementById('darkModeLabel');
+      if (label) label.textContent =
+        data.dark_mode ? 'Light Mode' : 'Dark Mode';
+    });
+  });
+})();
+
+// ═══════════════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════════════
+(function () {
+  const list   = document.getElementById('notifList');
+  const badge  = document.getElementById('notifBadge');
+  const dropEl = document.querySelector('.notif-dropdown')
+                          ?.closest('.dropdown');
+  if (!list || !dropEl) return;
+  dropEl.addEventListener('show.bs.dropdown', () => {
+    fetch('/accounts/api/notifications/')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.notifications?.length) {
+          list.innerHTML =
+            '<li><span class="dropdown-item-text text-muted small">No notifications</span></li>';
+          return;
+        }
+        list.innerHTML = data.notifications.map(n => `
+          <li class="notif-item ${n.is_read ? '' : 'unread'}">
+            <div style="font-weight:${n.is_read?'400':'600'};font-size:.85rem">
+              ${n.title}
+            </div>
+            <div style="font-size:.78rem;color:var(--text-muted);margin-top:2px">
+              ${n.message.substring(0,80)}…
+            </div>
+            <div style="font-size:.72rem;color:var(--text-dim);margin-top:4px">
+              ${n.created_at}
+            </div>
+          </li>`).join('');
+        if (data.unread > 0 && badge) badge.style.display = 'block';
+        fetch('/accounts/api/mark-notifications-read/', {
+          method: 'POST',
+          headers: { 'X-CSRFToken': getCookie('csrftoken') }
+        });
+      });
+  });
+})();
+
+// ═══════════════════════════════════════════════════════
+// HERO SLIDER
+// ═══════════════════════════════════════════════════════
+(function () {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  if (!slides.length) return;
+  let current = 0, timer;
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    if (dots[current]) dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    if (dots[current]) dots[current].classList.add('active');
+  }
+  function autoPlay() {
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  dots.forEach((dot, i) => dot.addEventListener('click', () => {
+    clearInterval(timer); goTo(i); autoPlay();
+  }));
+  if (slides.length > 1) autoPlay();
+})();
+
+// ═══════════════════════════════════════════════════════
+// VOICE BOOKING
+// ═══════════════════════════════════════════════════════
+(function () {
+  const btns       = document.querySelectorAll(
+    '#footerVoiceBtn, #voiceBookBtn');
+  const transcript = document.getElementById('voiceTranscript');
+  if (!btns.length) return;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    btns.forEach(b => b.addEventListener('click', () =>
+      alert('Voice booking requires Chrome.')));
+    return;
+  }
+  const rec = new SR();
+  rec.lang = 'en-IN';
+  rec.interimResults = true;
+  rec.onresult = e => {
+    const text = Array.from(e.results)
+                      .map(r => r[0].transcript).join('');
+    if (transcript) transcript.textContent = `Heard: "${text}"`;
+    if (e.results[0].isFinal) {
+      const q = text.toLowerCase()
+        .replace(/book|tickets?|for|movie|show|tonight|today/g, '')
+        .trim();
+      if (q.length > 2)
+        window.location.href = `/?q=${encodeURIComponent(q)}`;
+    }
+  };
+  rec.onend = () => {
+    const m = bootstrap.Modal.getInstance(
+      document.getElementById('voiceModal'));
+    if (m) m.hide();
+  };
+  btns.forEach(b => b.addEventListener('click', () => {
+    new bootstrap.Modal(
+      document.getElementById('voiceModal')).show();
+    setTimeout(() => rec.start(), 300);
+  }));
+})();
+
+// ═══════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('.toast').forEach(el => {
+  setTimeout(() =>
+    (bootstrap.Toast.getInstance(el) ||
+     new bootstrap.Toast(el)).hide(), 4000);
+});
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  if (nav) nav.style.boxShadow =
+    window.scrollY > 30 ? '0 4px 20px rgba(0,0,0,0.5)' : 'none';
+});
+
+function getCookie(name) {
+  const v = document.cookie.match(
+    '(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile — CinéAI{% endblock %}
+
+{% block content %}
+<div class="container-xl py-5">
+
+  <!-- Profile Header -->
+  <div class="profile-header mb-5">
+    <div class="profile-avatar">{{ user.username|first|upper }}</div>
+    <div class="flex-grow-1">
+      <h2 style="font-family:var(--font-display);letter-spacing:1px">
+        {{ user.get_full_name|default:user.username }}
+      </h2>
+      <div class="text-muted small d-flex flex-wrap gap-3 mt-1">
+        <span><i class="bi bi-envelope"></i> {{ user.email|default:"No email set" }}</span>
+        <span><i class="bi bi-phone"></i> {{ profile.phone|default:"No phone set" }}</span>
+        <span><i class="bi bi-geo-alt"></i> {{ profile.city|default:"City not set" }}</span>
+        <span><i class="bi bi-calendar3"></i> Member since {{ user.date_joined|date:"M Y" }}</span>
+      </div>
+    </div>
+    <div class="d-flex flex-column gap-2">
+      <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+        <i class="bi bi-pencil"></i> Edit Profile
+      </button>
+      <button class="btn btn-outline-light btn-sm" id="darkModeToggle">
+        <i class="bi bi-moon-stars"></i>
+        <span id="darkModeLabel">{% if profile.dark_mode %}Light Mode{% else %}Dark Mode{% endif %}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="row g-3 mb-5">
+    <div class="col-6 col-md-3">
+      <div class="stat-card" style="--accent-color:var(--accent-gold)">
+        <div class="stat-icon"><i class="bi bi-ticket"></i></div>
+        <div class="stat-value">{{ active_bookings.count }}</div>
+        <div class="stat-label">Active Bookings</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card" style="--accent-color:var(--accent-blue)">
+        <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+        <div class="stat-value">{{ past_bookings.count }}</div>
+        <div class="stat-label">Past Bookings</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card" style="--accent-color:var(--accent-green)">
+        <div class="stat-icon"><i class="bi bi-bell"></i></div>
+        <div class="stat-value">{{ unread_count }}</div>
+        <div class="stat-label">Unread Notifications</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card" style="--accent-color:var(--accent-red)">
+        <div class="stat-icon"><i class="bi bi-star"></i></div>
+        <div class="stat-value">{{ active_bookings.count|add:past_bookings.count }}</div>
+        <div class="stat-label">Total Movies</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-5">
+    <div class="col-lg-8">
+
+      <!-- Tabs -->
+      <ul class="nav nav-pills mb-4 gap-2" id="profileTabs">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#activeTab">
+            <i class="bi bi-ticket-perforated"></i> Active Bookings
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#historyTab">
+            <i class="bi bi-clock-history"></i> History
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notifTab">
+            <i class="bi bi-bell"></i> Notifications
+            {% if unread_count > 0 %}<span class="badge bg-danger ms-1">{{ unread_count }}</span>{% endif %}
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <!-- Active Bookings -->
+        <div class="tab-pane fade show active" id="activeTab">
+          {% for booking in active_bookings %}
+          <div class="booking-history-item">
+            <img src="{{ booking.show.movie.get_poster_url }}" alt="{{ booking.show.movie.title }}"
+                 class="booking-poster"
+                 onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                <h6 class="mb-1">{{ booking.show.movie.title }}</h6>
+                <span class="booking-status status-confirmed">Confirmed</span>
+              </div>
+              <div class="text-muted small">
+                <i class="bi bi-calendar3"></i> {{ booking.show.show_date|date:"D, d M Y" }}
+                &nbsp;|&nbsp;
+                <i class="bi bi-clock"></i> {{ booking.show.show_time|time:"H:i" }}
+              </div>
+              <div class="text-muted small mt-1">
+                <i class="bi bi-building"></i> {{ booking.show.screen.theatre.name }}
+                &nbsp;|&nbsp;
+                Seats: {{ booking.seats }}
+              </div>
+              <div class="text-muted small mt-1">
+                <i class="bi bi-cash"></i> ₹{{ booking.total_amount }} via {{ booking.get_payment_method_display }}
+              </div>
+            </div>
+            <div class="d-flex flex-column gap-2">
+              <a href="{% url 'bookings:ticket_confirmation' booking.booking_id %}" class="btn btn-primary btn-sm">
+                <i class="bi bi-qr-code"></i> View Ticket
+              </a>
+              {% if booking.can_cancel %}
+              <form method="post" action="{% url 'bookings:cancel_booking' booking.booking_id %}"
+                    onsubmit="return confirm('Cancel this booking?')">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm w-100">
+                  <i class="bi bi-x-circle"></i> Cancel
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+          {% empty %}
+          <div class="text-center py-5">
+            <i class="bi bi-ticket-perforated" style="font-size:3rem;color:var(--text-dim)"></i>
+            <p class="mt-3 text-muted">No active bookings</p>
+            <a href="/" class="btn btn-primary">Book a Movie</a>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- History -->
+        <div class="tab-pane fade" id="historyTab">
+          {% for booking in past_bookings %}
+          <div class="booking-history-item">
+            <img src="{{ booking.show.movie.get_poster_url }}" alt="{{ booking.show.movie.title }}"
+                 class="booking-poster"
+                 onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between flex-wrap gap-2">
+                <h6 class="mb-1">{{ booking.show.movie.title }}</h6>
+                <span class="booking-status status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+              </div>
+              <div class="text-muted small">
+                {{ booking.show.show_date|date:"d M Y" }} · {{ booking.show.show_time|time:"H:i" }}
+                · {{ booking.show.screen.theatre.name }}
+              </div>
+              {% if booking.refund_amount > 0 %}
+              <div class="text-success small mt-1">
+                <i class="bi bi-arrow-counterclockwise"></i> Refund: ₹{{ booking.refund_amount }}
+              </div>
+              {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-2">
+              <a href="{% url 'bookings:ticket_confirmation' booking.booking_id %}" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-eye"></i> View
+              </a>
+              <a href="{% url 'movies:movie_detail' booking.show.movie.slug %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-arrow-repeat"></i> Rebook
+              </a>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted py-4">No past bookings yet</p>
+          {% endfor %}
+        </div>
+
+        <!-- Notifications -->
+        <div class="tab-pane fade" id="notifTab">
+          {% for notif in notifications %}
+          <div class="notif-item {% if not notif.is_read %}unread{% endif %} rounded-xl mb-2 p-3" style="background:var(--bg-card);border:1px solid var(--border)">
+            <div style="font-weight:{% if not notif.is_read %}600{% else %}400{% endif %}">
+              {{ notif.title }}
+            </div>
+            <div class="text-muted small mt-1">{{ notif.message }}</div>
+            <div style="font-size:.72rem;color:var(--text-dim);margin-top:4px">
+              {{ notif.created_at|date:"d M Y H:i" }}
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted py-4">No notifications</p>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+    <div class="col-lg-4">
+
+      <!-- Preferred Genres -->
+      <div class="glass-card p-4 mb-4">
+        <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:16px">MOVIE PREFERENCES</h6>
+        <p class="text-muted small">These preferences help our AI recommend better movies for you.</p>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          {% with pref_list=profile.get_preferred_genres_list %}
+          {% for genre in pref_list %}
+          <span class="cat-chip active">{{ genre|title }}</span>
+          {% empty %}
+          <span class="text-muted small">No preferences set. Edit profile to add.</span>
+          {% endfor %}
+          {% endwith %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content glass-card">
+      <div class="modal-header" style="border-bottom:1px solid var(--border)">
+        <h5 class="modal-title" style="font-family:var(--font-display);letter-spacing:1px">EDIT PROFILE</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" action="{% url 'accounts:update_profile' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="form-label">First Name</label>
+              <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Last Name</label>
+              <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control" value="{{ profile.phone }}">
+            </div>
+            <div class="col-6">
+              <label class="form-label">City</label>
+              <input type="text" name="city" class="form-control" value="{{ profile.city }}">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Preferred Genres</label>
+              <select name="preferred_genres" class="form-select" multiple>
+                {% for slug, label in genre_choices %}
+                <option value="{{ slug }}" {% if slug in profile.get_preferred_genres_list %}selected{% endif %}>
+                  {{ label }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top:1px solid var(--border)">
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

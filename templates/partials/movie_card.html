@@ -1,0 +1,36 @@
+{% load static %}
+<div class="movie-card h-100" onclick="location.href='{% url 'movies:movie_detail' movie.slug %}'">
+  <div class="poster-wrap">
+    <img src="{{ movie.get_poster_url }}" alt="{{ movie.title }}" loading="lazy"
+         onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+    <div class="badge-rating">
+      <i class="bi bi-star-fill"></i> {{ movie.imdb_score }}
+    </div>
+    {% if movie.is_featured %}
+    <div class="badge-featured">Featured</div>
+    {% endif %}
+    <div class="poster-overlay">
+      <div class="overlay-actions">
+        <a href="{% url 'movies:movie_detail' movie.slug %}" class="btn btn-primary btn-sm"
+           onclick="event.stopPropagation()">
+          <i class="bi bi-ticket-perforated"></i> Book
+        </a>
+        <a href="{% url 'movies:movie_detail' movie.slug %}#trailer" class="btn btn-outline-light btn-sm"
+           onclick="event.stopPropagation()">
+          <i class="bi bi-play"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card-info">
+    <div class="movie-title">{{ movie.title }}</div>
+    <div class="movie-meta">
+      <span><i class="bi bi-clock"></i> {{ movie.duration_display }}</span>
+      <span>
+        {% for cat in movie.categories.all|slice:":2" %}
+          {{ cat.get_name_display }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ movie.title }} — BookMySeat{% endblock %}
+
+{% block content %}
+
+<!-- ── MOVIE HERO ──────────────────────────────────────── -->
+<div class="movie-detail-hero">
+  <div class="movie-detail-backdrop"
+       style="background-image:url('{{ movie.get_poster_url }}')"></div>
+  <div class="movie-detail-content">
+    <div class="container-xl">
+      <div class="row g-4 align-items-start">
+
+        <!-- Poster -->
+        <div class="col-auto">
+          <img src="{{ movie.get_poster_url }}" alt="{{ movie.title }}"
+               class="movie-main-poster"
+               onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+        </div>
+
+        <!-- Info -->
+        <div class="col">
+
+          <!-- Categories -->
+          <div class="d-flex gap-2 flex-wrap mb-3">
+            {% for cat in movie.categories.all %}
+            <a href="/?category={{ cat.slug }}"
+               class="badge rounded-pill"
+               style="background:rgba(230,57,70,.15);color:var(--accent-red);border:1px solid rgba(230,57,70,.4);font-weight:500">
+              {{ cat.icon }} {{ cat.get_name_display }}
+            </a>
+            {% endfor %}
+            <span class="badge rounded-pill bg-secondary">{{ movie.rating }}</span>
+          </div>
+
+          <!-- Title -->
+          <h1 style="font-family:var(--font-display);letter-spacing:2px;line-height:1.1">
+            {{ movie.title }}
+          </h1>
+
+          <!-- Meta row -->
+          <div class="d-flex gap-4 flex-wrap mt-3 mb-4">
+            <span class="d-flex align-items-center gap-2">
+              <i class="bi bi-star-fill text-warning"></i>
+              <strong style="font-size:1.2rem;font-family:var(--font-mono)">
+                {{ movie.imdb_score }}
+              </strong>
+              <span style="color:var(--text-muted);font-size:.85rem">IMDb</span>
+            </span>
+            <span class="text-muted d-flex align-items-center gap-1">
+              <i class="bi bi-clock"></i> {{ movie.duration_display }}
+            </span>
+            <span class="text-muted d-flex align-items-center gap-1">
+              <i class="bi bi-translate"></i> {{ movie.get_language_display }}
+            </span>
+            <span class="text-muted d-flex align-items-center gap-1">
+              <i class="bi bi-calendar3"></i> {{ movie.release_date|date:"d M Y" }}
+            </span>
+          </div>
+
+          <!-- Description -->
+          <p style="color:rgba(240,240,240,.8);max-width:600px;line-height:1.8">
+            {{ movie.description }}
+          </p>
+
+          <!-- Director -->
+          <div class="mt-3">
+            <span class="text-muted small">Director: </span>
+            <span class="fw-600">{{ movie.director }}</span>
+          </div>
+
+          <!-- Cast -->
+          <div class="mt-2">
+            <span class="text-muted small">Cast: </span>
+            {% for actor in cast_list %}
+            <span class="badge me-1"
+                  style="background:var(--bg-card);border:1px solid var(--border);
+                         color:var(--text-primary);font-weight:400">
+              {{ actor }}
+            </span>
+            {% endfor %}
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="d-flex gap-3 mt-4 flex-wrap">
+            <a href="#showtimes" class="btn btn-primary btn-lg">
+              <i class="bi bi-ticket-perforated-fill"></i> Book Tickets
+            </a>
+            <a href="#trailer" class="btn btn-outline-light">
+              <i class="bi bi-play-circle"></i> Watch Trailer
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── MAIN BODY ───────────────────────────────────────── -->
+<div class="container-xl py-5">
+  <div class="row g-5">
+    <div class="col-lg-8">
+
+      <!-- ── TRAILER ─────────────────────────────────────── -->
+      {% if movie.trailer_url %}
+      <div id="trailer" class="mb-5">
+        <h3 class="section-title mb-4">Official Trailer</h3>
+
+        <!-- Trailer container -->
+        <div class="trailer-wrap" id="trailerWrap">
+
+          <!-- YouTube iframe — fixed with all required attributes -->
+          <iframe
+            id="trailerFrame"
+            src="{{ movie.trailer_url }}?rel=0&modestbranding=1&autoplay=0"
+            title="{{ movie.title }} Trailer"
+            allow="accelerometer; autoplay; clipboard-write;
+                   encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            style="border:none;
+                   position:absolute;
+                   top:0; left:0;
+                   width:100%; height:100%">
+          </iframe>
+
+          <!-- Fallback: shown when YouTube blocks embedding (Error 150/153) -->
+          <div id="trailerFallback"
+               style="display:none;
+                      position:absolute;
+                      inset:0;
+                      background:#111827;
+                      flex-direction:column;
+                      align-items:center;
+                      justify-content:center;
+                      gap:16px;
+                      border-radius:12px;
+                      text-align:center;
+                      padding:24px">
+            <div style="font-size:4rem">🎬</div>
+            <div style="color:#f0f0f0;font-size:1.1rem;font-weight:600">
+              Trailer not available for embedding
+            </div>
+            <div style="color:#888;font-size:.85rem;max-width:320px">
+              The video owner has disabled embedding for this trailer
+            </div>
+            <a href="https://www.youtube.com/results?search_query={{ movie.title|urlencode }}+official+trailer"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn btn-primary mt-2">
+              <i class="bi bi-youtube"></i> Search Trailer on YouTube
+            </a>
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+      <!-- ── END TRAILER ───────────────────────────────── -->
+
+
+      <!-- ── SHOW TIMINGS ───────────────────────────────── -->
+      <div id="showtimes">
+        <h3 class="section-title mb-4">Book Tickets</h3>
+
+        {% if shows_by_date %}
+          {% for date, shows in shows_by_date.items %}
+          <div class="mb-4">
+            <h6 style="color:var(--text-muted);font-size:.8rem;
+                       text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">
+              <i class="bi bi-calendar3"></i> {{ date|date:"D, d M Y" }}
+            </h6>
+            <div class="d-flex flex-wrap gap-3">
+              {% for show in shows %}
+              <a href="{% url 'bookings:seat_selection' show.id %}"
+                 class="show-time-card">
+                <div class="time">{{ show.show_time|time:"H:i" }}</div>
+                <div class="price">₹{{ show.ticket_price }}</div>
+                <div class="avail">{{ show.available_seats_count }} seats left</div>
+                <div style="font-size:.7rem;color:var(--text-dim);margin-top:2px">
+                  {{ show.screen.name }} · {{ show.screen.theatre.name }}
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+
+        {% else %}
+          <div class="text-center py-4 border-subtle rounded-xl">
+            <i class="bi bi-calendar-x"
+               style="font-size:2.5rem;color:var(--text-dim)"></i>
+            <p class="mt-3 text-muted">No upcoming shows available</p>
+          </div>
+        {% endif %}
+      </div>
+      <!-- ── END SHOW TIMINGS ──────────────────────────── -->
+
+    </div>
+
+
+    <!-- ── SIMILAR MOVIES ─────────────────────────────── -->
+    <div class="col-lg-4">
+      <h3 class="section-title mb-4">Similar Movies</h3>
+
+      {% for m in similar %}
+      <a href="{% url 'movies:movie_detail' m.slug %}" style="text-decoration:none">
+        <div class="d-flex gap-3 align-items-start mb-3 p-3 rounded-xl"
+             style="background:var(--bg-card);
+                    border:1px solid var(--border);
+                    transition:all .25s"
+             onmouseover="this.style.borderColor='rgba(230,57,70,.4)'"
+             onmouseout="this.style.borderColor='var(--border)'">
+          <img src="{{ m.get_poster_url }}"
+               alt="{{ m.title }}"
+               style="width:55px;height:75px;object-fit:cover;
+                      border-radius:6px;flex-shrink:0"
+               onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+          <div>
+            <div style="font-weight:600;font-size:.9rem;color:var(--text-primary)">
+              {{ m.title }}
+            </div>
+            <div style="font-size:.75rem;color:var(--text-muted);margin-top:4px">
+              <i class="bi bi-star-fill text-warning"></i> {{ m.imdb_score }}
+              &nbsp;·&nbsp; {{ m.duration_display }}
+            </div>
+            <div style="font-size:.7rem;color:var(--text-dim);margin-top:4px">
+              {{ m.get_language_display }}
+            </div>
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p class="text-muted small">No similar movies found.</p>
+      {% endfor %}
+
+    </div>
+    <!-- ── END SIMILAR MOVIES ────────────────────────── -->
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!-- ── TRAILER FIX JAVASCRIPT ─────────────────────────── -->
+{% block extra_js %}
+<script>
+
+  // ── Show fallback div when trailer fails ─────────────
+  function showTrailerFallback() {
+    const frame    = document.getElementById('trailerFrame');
+    const fallback = document.getElementById('trailerFallback');
+    if (frame)    frame.style.display    = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  }
+
+  // ── Catch YouTube postMessage errors ─────────────────
+  // Error 150 = embedding blocked by owner
+  // Error 153 = video not available / restricted
+  // Error 101 = video not available in embedded player
+  window.addEventListener('message', function(e) {
+    if (e.origin !== 'https://www.youtube.com') return;
+    try {
+      const data = JSON.parse(e.data);
+      if (data.event === 'onError' ||
+          data.info  === 150       ||
+          data.info  === 153       ||
+          data.info  === 101) {
+        showTrailerFallback();
+      }
+    } catch(err) {
+      // JSON parse error — ignore
+    }
+  });
+
+  // ── Safety timeout check after 5 seconds ─────────────
+  // If iframe content is blank or inaccessible, show fallback
+  setTimeout(function() {
+    const frame = document.getElementById('trailerFrame');
+    if (!frame) return;
+    try {
+      const doc = frame.contentDocument;
+      if (doc && (doc.body.innerHTML === '' || doc.title === '')) {
+        showTrailerFallback();
+      }
+    } catch(e) {
+      // Cross-origin exception means YouTube DID load = trailer is working
+      // Do nothing here
+    }
+  }, 5000);
+
+</script>
+{% endblock %}

@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment — {{ show.movie.title }}{% endblock %}
+
+{% block content %}
+<div class="container-xl py-5">
+
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb" style="background:none;padding:0;font-size:.85rem">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'movies:movie_detail' show.movie.slug %}">{{ show.movie.title }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'bookings:seat_selection' show.id %}">Seats</a></li>
+      <li class="breadcrumb-item active">Payment</li>
+    </ol>
+  </nav>
+
+  <!-- Progress bar -->
+  <div class="d-flex align-items-center gap-0 mb-5" style="font-size:.8rem">
+    <div class="d-flex align-items-center gap-2 text-success"><i class="bi bi-check-circle-fill"></i> Seats Selected</div>
+    <div style="flex:1;height:2px;background:var(--accent-green);margin:0 12px"></div>
+    <div class="d-flex align-items-center gap-2 text-warning"><i class="bi bi-circle-fill" style="font-size:.5rem"></i> Payment</div>
+    <div style="flex:1;height:2px;background:var(--border);margin:0 12px"></div>
+    <div class="d-flex align-items-center gap-2 text-muted"><i class="bi bi-circle" style="font-size:.7rem"></i> Confirmation</div>
+  </div>
+
+  <div class="row g-5">
+
+    <!-- ── PAYMENT METHODS ─────────────────────────────────── -->
+    <div class="col-lg-7">
+      <div class="glass-card p-4">
+        <h4 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:24px">PAYMENT METHOD</h4>
+
+        <div id="paymentMethods" class="d-flex flex-column gap-3 mb-4">
+
+          <!-- UPI -->
+          <div class="payment-method-card selected" data-method="upi" onclick="selectPayment(this)">
+            <div class="payment-icon">📱</div>
+            <div>
+              <div class="payment-label">UPI Payment</div>
+              <div class="payment-sublabel">GPay, PhonePe, Paytm, BHIM & more</div>
+            </div>
+            <div class="ms-auto"><i class="bi bi-check-circle-fill text-success" id="checkUpi"></i></div>
+          </div>
+
+          <!-- Card -->
+          <div class="payment-method-card" data-method="card" onclick="selectPayment(this)">
+            <div class="payment-icon">💳</div>
+            <div>
+              <div class="payment-label">Credit / Debit Card</div>
+              <div class="payment-sublabel">Visa, Mastercard, RuPay, Amex</div>
+            </div>
+            <div class="ms-auto"><i class="bi bi-circle text-muted" id="checkCard"></i></div>
+          </div>
+
+          <!-- Cash -->
+          <div class="payment-method-card" data-method="cash" onclick="selectPayment(this)">
+            <div class="payment-icon">💵</div>
+            <div>
+              <div class="payment-label">Cash at Counter</div>
+              <div class="payment-sublabel">Pay at the box office before the show</div>
+            </div>
+            <div class="ms-auto"><i class="bi bi-circle text-muted" id="checkCash"></i></div>
+          </div>
+        </div>
+
+        <!-- UPI sub-form -->
+        <div id="upiForm" class="mb-4">
+          <label class="form-label">UPI ID</label>
+          <input type="text" id="upiId" class="form-control" placeholder="yourname@paytm">
+          <small class="text-muted">Simulated payment — enter any UPI ID</small>
+        </div>
+
+        <!-- Card sub-form -->
+        <div id="cardForm" class="mb-4 d-none">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Card Number</label>
+              <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" id="cardNum" oninput="formatCard(this)">
+            </div>
+            <div class="col-6">
+              <label class="form-label">Expiry</label>
+              <input type="text" class="form-control" placeholder="MM / YY" maxlength="7">
+            </div>
+            <div class="col-6">
+              <label class="form-label">CVV</label>
+              <input type="password" class="form-control" placeholder="•••" maxlength="3">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Cardholder Name</label>
+              <input type="text" class="form-control" placeholder="Name on card">
+            </div>
+          </div>
+          <small class="text-muted mt-2 d-block">Simulated — no real payment is processed</small>
+        </div>
+
+        <!-- Coupon -->
+        <div class="mb-4 p-3 rounded-xl" style="background:var(--bg-secondary);border:1px dashed var(--border)">
+          <label class="form-label">🎟️ Have a Coupon?</label>
+          <div class="d-flex gap-2">
+            <input type="text" id="couponInput" class="form-control" placeholder="Enter coupon code" style="text-transform:uppercase">
+            <button class="btn btn-outline-primary" onclick="applyCoupon()">Apply</button>
+          </div>
+          <div id="couponMsg" class="mt-2 small" style="display:none"></div>
+        </div>
+
+        <!-- Confirm button -->
+        <button class="btn btn-primary w-100 py-3" id="confirmBtn" onclick="confirmPayment()">
+          <i class="bi bi-lock-fill"></i>
+          Pay & Confirm Booking
+          <span id="payAmount" class="ms-2 mono">₹{{ ticket_total|floatformat:2 }}</span>
+        </button>
+        <p class="text-muted small text-center mt-2">
+          <i class="bi bi-shield-check"></i> 256-bit SSL secured · Demo payment
+        </p>
+      </div>
+    </div>
+
+    <!-- ── ORDER SUMMARY ──────────────────────────────────── -->
+    <div class="col-lg-5">
+      <div class="order-summary">
+        <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:20px">ORDER DETAILS</h6>
+
+        <!-- Movie info -->
+        <div class="d-flex gap-3 mb-4 pb-4" style="border-bottom:1px solid var(--border)">
+          <img src="{{ show.movie.get_poster_url }}" alt="{{ show.movie.title }}"
+               style="width:55px;height:75px;object-fit:cover;border-radius:6px;flex-shrink:0"
+               onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+          <div>
+            <div style="font-weight:600">{{ show.movie.title }}</div>
+            <div class="text-muted small mt-1">{{ show.show_date|date:"D, d M Y" }} at {{ show.show_time|time:"H:i" }}</div>
+            <div class="text-muted small">{{ show.screen.theatre.name }} · {{ show.screen.name }}</div>
+          </div>
+        </div>
+
+        <!-- Seats -->
+        <div class="mb-3">
+          <div class="text-muted small mb-2">Seats</div>
+          <div class="ticket-seats">
+            {% for seat in seat_labels %}
+            <span class="seat-tag">{{ seat }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Summary rows -->
+        <div class="summary-row">
+          <span>Tickets ({{ num_seats }} × ₹{{ ticket_price }})</span>
+          <span class="amount">₹{{ ticket_total|floatformat:2 }}</span>
+        </div>
+        <div class="summary-row" id="foodRow" style="display:none">
+          <span>Food & Drinks</span>
+          <span class="amount" id="summFoodTotal">₹0.00</span>
+        </div>
+        <div class="summary-row discount" id="discountRow" style="display:none">
+          <span>Coupon Discount</span>
+          <span class="amount" id="summDiscount">−₹0.00</span>
+        </div>
+        <div class="summary-row" style="color:var(--text-muted);font-size:.8rem">
+          <span>Booking Fee</span>
+          <span class="amount">₹0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total Payable</span>
+          <span class="amount" id="summTotal">₹{{ ticket_total|floatformat:2 }}</span>
+        </div>
+
+        <!-- Refund policy -->
+        <div class="mt-4 p-3 rounded-xl" style="background:rgba(6,214,160,.07);border:1px solid rgba(6,214,160,.2)">
+          <div style="font-size:.75rem;color:var(--accent-green);font-weight:600;margin-bottom:4px">
+            <i class="bi bi-arrow-counterclockwise"></i> Refund Policy
+          </div>
+          <div style="font-size:.78rem;color:var(--text-muted)">
+            100% refund if cancelled 24+ hours before show<br>
+            75% if cancelled 4–24 hours before<br>
+            50% if cancelled 1–4 hours before
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Processing overlay -->
+<div id="processingOverlay" class="d-none" style="position:fixed;inset:0;background:rgba(10,10,15,.85);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+  <div class="spinner-border text-warning" style="width:3rem;height:3rem"></div>
+  <div style="font-family:var(--font-display);font-size:1.5rem;letter-spacing:2px;color:var(--accent-gold)">PROCESSING PAYMENT…</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const SHOW_ID = {{ show.id }};
+const BASE_TICKET = {{ ticket_total }};
+let selectedMethod = 'upi';
+let foodTotal = 0;
+let discountAmount = 0;
+let appliedCoupon = '';
+
+// Restore food orders from seat selection
+const savedFood = JSON.parse(sessionStorage.getItem('foodOrders') || '[]');
+// Calculate food total (simplified — prices loaded server-side already)
+
+function selectPayment(card) {
+  document.querySelectorAll('.payment-method-card').forEach(c => {
+    c.classList.remove('selected');
+    const method = c.dataset.method;
+    const icon = document.getElementById('check' + method.charAt(0).toUpperCase() + method.slice(1));
+    if (icon) icon.className = 'bi bi-circle text-muted';
+  });
+  card.classList.add('selected');
+  selectedMethod = card.dataset.method;
+  const icon = document.getElementById('check' + selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1));
+  if (icon) icon.className = 'bi bi-check-circle-fill text-success';
+
+  document.getElementById('upiForm').classList.toggle('d-none', selectedMethod !== 'upi');
+  document.getElementById('cardForm').classList.toggle('d-none', selectedMethod !== 'card');
+}
+
+function applyCoupon() {
+  const code = document.getElementById('couponInput').value.trim();
+  const total = BASE_TICKET + foodTotal;
+  const msgEl = document.getElementById('couponMsg');
+
+  fetch('/bookings/api/validate-coupon/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+    body: JSON.stringify({ code, amount: total })
+  }).then(r => r.json()).then(data => {
+    msgEl.style.display = 'block';
+    if (data.valid) {
+      discountAmount = data.discount;
+      appliedCoupon = code;
+      msgEl.style.color = 'var(--accent-green)';
+      msgEl.textContent = '✓ ' + data.message;
+      updateTotal();
+    } else {
+      discountAmount = 0;
+      msgEl.style.color = 'var(--accent-red)';
+      msgEl.textContent = '✗ ' + data.message;
+      updateTotal();
+    }
+  });
+}
+
+function updateTotal() {
+  const total = BASE_TICKET + foodTotal - discountAmount;
+  document.getElementById('summTotal').textContent = '₹' + total.toFixed(2);
+  document.getElementById('payAmount').textContent = '₹' + total.toFixed(2);
+
+  const discRow = document.getElementById('discountRow');
+  discRow.style.display = discountAmount > 0 ? 'flex' : 'none';
+  document.getElementById('summDiscount').textContent = '−₹' + discountAmount.toFixed(2);
+}
+
+function confirmPayment() {
+  const btn = document.getElementById('confirmBtn');
+  const overlay = document.getElementById('processingOverlay');
+  btn.disabled = true;
+  overlay.classList.remove('d-none');
+  overlay.style.display = 'flex';
+
+  setTimeout(() => {
+    fetch('/bookings/api/confirm/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+      body: JSON.stringify({
+        show_id: SHOW_ID,
+        payment_method: selectedMethod,
+        coupon_code: appliedCoupon,
+        food_orders: savedFood,
+      })
+    }).then(r => r.json()).then(data => {
+      overlay.classList.add('d-none');
+      if (data.success) {
+        window.location.href = data.redirect;
+      } else {
+        btn.disabled = false;
+        alert('Error: ' + (data.error || 'Payment failed. Please try again.'));
+      }
+    }).catch(() => {
+      overlay.classList.add('d-none');
+      btn.disabled = false;
+      alert('Network error. Please try again.');
+    });
+  }, 2000); // Simulate processing delay
+}
+
+function formatCard(input) {
+  let v = input.value.replace(/\D/g, '');
+  input.value = v.replace(/(.{4})/g, '$1 ').trim().substring(0, 19);
+}
+
+function getCookie(name) {
+  const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
+</script>
+{% endblock %}

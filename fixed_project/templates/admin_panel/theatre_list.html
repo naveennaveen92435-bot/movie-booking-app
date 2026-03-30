@@ -1,0 +1,39 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Theatres & Screens — Admin{% endblock %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">THEATRES & SCREENS</h2>
+  <a href="{% url 'admin_panel:theatre_add' %}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Theatre</a>
+</div>
+{% for theatre in theatres %}
+<div class="admin-table-wrap mb-4">
+  <div class="d-flex align-items-center justify-content-between p-4" style="border-bottom:1px solid var(--border)">
+    <div>
+      <h6 style="margin:0;font-weight:600">{{ theatre.name }}</h6>
+      <div style="font-size:.8rem;color:var(--text-muted)"><i class="bi bi-geo-alt"></i> {{ theatre.location }}, {{ theatre.city }}</div>
+    </div>
+    <a href="{% url 'admin_panel:screen_add' theatre.id %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-plus"></i> Add Screen
+    </a>
+  </div>
+  <table class="admin-table">
+    <thead><tr><th>Screen</th><th>Rows</th><th>Seats/Row</th><th>Total Seats</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for screen in theatre.screens.all %}
+      <tr>
+        <td>{{ screen.name }}</td>
+        <td>{{ screen.total_rows }}</td>
+        <td>{{ screen.seats_per_row }}</td>
+        <td class="mono">{{ screen.total_seats }}</td>
+        <td><span class="booking-status status-{% if screen.is_active %}confirmed{% else %}cancelled{% endif %}">{% if screen.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-muted text-center py-3">No screens added yet</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% empty %}
+<div class="text-center py-5 text-muted">No theatres yet. <a href="{% url 'admin_panel:theatre_add' %}">Add one</a></div>
+{% endfor %}
+{% endblock %}

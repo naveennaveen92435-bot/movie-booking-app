@@ -1,0 +1,182 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% load static %}
+
+{% block title %}Dashboard — Admin{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 style="font-family:var(--font-display);letter-spacing:2px">DASHBOARD</h2>
+    <div class="text-muted small">Welcome back, {{ request.user.username }}</div>
+  </div>
+  <div class="text-muted small">
+    <i class="bi bi-calendar3"></i> {% now "D, d M Y" %}
+  </div>
+</div>
+
+<!-- ── KPI CARDS ─────────────────────────────────────────── -->
+<div class="row g-3 mb-5">
+  <div class="col-6 col-md-3">
+    <div class="stat-card" style="--accent-color:var(--accent-gold)">
+      <div class="stat-icon"><i class="bi bi-ticket-perforated"></i></div>
+      <div class="stat-value">{{ total_bookings }}</div>
+      <div class="stat-label">Total Bookings</div>
+      <div class="stat-change up"><i class="bi bi-arrow-up"></i> {{ today_bookings }} today</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card" style="--accent-color:var(--accent-green)">
+      <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+      <div class="stat-value">₹{{ total_revenue|floatformat:0 }}</div>
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-change up"><i class="bi bi-arrow-up"></i> ₹{{ today_revenue|floatformat:0 }} today</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card" style="--accent-color:var(--accent-blue)">
+      <div class="stat-icon"><i class="bi bi-film"></i></div>
+      <div class="stat-value">{{ active_movies }}</div>
+      <div class="stat-label">Active Movies</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="stat-card" style="--accent-color:var(--accent-red)">
+      <div class="stat-icon"><i class="bi bi-people"></i></div>
+      <div class="stat-value">{{ total_users }}</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CHARTS ─────────────────────────────────────────────── -->
+<div class="row g-4 mb-5">
+  <div class="col-lg-8">
+    <div class="admin-table-wrap p-4">
+      <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:20px">REVENUE — LAST 7 DAYS</h6>
+      <canvas id="revenueChart" height="100"></canvas>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="admin-table-wrap p-4">
+      <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:20px">TOP MOVIES</h6>
+      {% for movie in top_movies %}
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <div style="width:24px;height:24px;background:rgba(245,197,24,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--accent-gold)">
+            {{ forloop.counter }}
+          </div>
+          <div style="font-size:.85rem;font-weight:500">{{ movie.title|truncatechars:22 }}</div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:.8rem;color:var(--accent-gold)">
+          {{ movie.booking_count }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- ── RECENT BOOKINGS ────────────────────────────────────── -->
+<div class="admin-table-wrap mb-5">
+  <div class="d-flex align-items-center justify-content-between p-4" style="border-bottom:1px solid var(--border)">
+    <h6 style="font-family:var(--font-display);letter-spacing:1px;margin:0">RECENT BOOKINGS</h6>
+    <a href="{% url 'admin_panel:booking_list' %}" class="btn btn-outline-primary btn-sm">View All</a>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>User</th>
+          <th>Movie</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in recent_bookings %}
+        <tr>
+          <td class="mono" style="font-size:.75rem">{{ booking.booking_id|truncatechars:12 }}</td>
+          <td>{{ booking.user.username }}</td>
+          <td>{{ booking.show.movie.title|truncatechars:20 }}</td>
+          <td style="font-size:.8rem;color:var(--text-muted)">{{ booking.booked_at|date:"d M H:i" }}</td>
+          <td class="mono">₹{{ booking.total_amount }}</td>
+          <td>
+            <span class="booking-status status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+          </td>
+          <td>
+            <a href="{% url 'bookings:ticket_confirmation' booking.booking_id %}"
+               class="btn btn-outline-light btn-sm" target="_blank">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const dailyData = {{ daily_data|safe }};
+
+// Revenue chart
+const ctx = document.getElementById('revenueChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: dailyData.map(d => d.date),
+    datasets: [
+      {
+        label: 'Revenue (₹)',
+        data: dailyData.map(d => d.revenue),
+        backgroundColor: 'rgba(245,197,24,0.7)',
+        borderColor: '#f5c518',
+        borderWidth: 1,
+        borderRadius: 4,
+        yAxisID: 'y',
+      },
+      {
+        label: 'Bookings',
+        data: dailyData.map(d => d.bookings),
+        type: 'line',
+        borderColor: '#4cc9f0',
+        backgroundColor: 'rgba(76,201,240,0.1)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        yAxisID: 'y1',
+        pointBackgroundColor: '#4cc9f0',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { labels: { color: '#888' } } },
+    scales: {
+      x: { ticks: { color: '#888' }, grid: { color: 'rgba(255,255,255,.04)' } },
+      y: {
+        ticks: { color: '#888', callback: v => '₹'+v },
+        grid: { color: 'rgba(255,255,255,.04)' },
+        position: 'left',
+      },
+      y1: {
+        ticks: { color: '#4cc9f0' },
+        grid: { display: false },
+        position: 'right',
+      }
+    }
+  }
+});
+</script>
+{% endblock %}

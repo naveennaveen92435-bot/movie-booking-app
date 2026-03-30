@@ -1,0 +1,35 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Schedule Show — Admin{% endblock %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">SCHEDULE SHOW</h2>
+  <a href="{% url 'admin_panel:show_list' %}" class="btn btn-outline-light"><i class="bi bi-arrow-left"></i> Back</a>
+</div>
+<div class="admin-table-wrap p-4" style="max-width:600px">
+  <form method="post">{% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Movie</label>
+      <select name="movie" class="form-select" required>
+        <option value="">Select movie…</option>
+        {% for m in movies %}<option value="{{ m.id }}">{{ m.title }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Screen</label>
+      <select name="screen" class="form-select" required>
+        <option value="">Select screen…</option>
+        {% for s in screens %}<option value="{{ s.id }}">{{ s.theatre.name }} — {{ s.name }} ({{ s.total_seats }} seats)</option>{% endfor %}
+      </select>
+    </div>
+    <div class="row g-3 mb-3">
+      <div class="col-6"><label class="form-label">Show Date</label><input type="date" name="show_date" class="form-control" required></div>
+      <div class="col-6"><label class="form-label">Show Time</label><input type="time" name="show_time" class="form-control" required></div>
+    </div>
+    <div class="mb-4"><label class="form-label">Ticket Price (₹)</label><input type="number" name="ticket_price" class="form-control" value="200" min="50" step="10"></div>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Schedule</button>
+      <a href="{% url 'admin_panel:show_list' %}" class="btn btn-outline-light">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

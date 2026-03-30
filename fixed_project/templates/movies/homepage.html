@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CinéAI — Smart Movie Booking{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO SLIDER ─────────────────────────────────────── -->
+{% if featured %}
+<section class="hero-section">
+  {% for movie in featured %}
+  <div class="hero-slide {% if forloop.first %}active{% endif %}">
+    <img src="{{ movie.get_poster_url }}" alt="{{ movie.title }}"
+         onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+    <div class="hero-overlay">
+      <div class="container-xl">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="bi bi-star-fill"></i> Now Showing
+          </div>
+          <h1 class="hero-title">{{ movie.title }}</h1>
+          <div class="hero-meta">
+            <span><i class="bi bi-star-fill text-warning"></i> {{ movie.imdb_score }}</span>
+            <span><i class="bi bi-clock"></i> {{ movie.duration_display }}</span>
+            <span><i class="bi bi-badge-cc"></i> {{ movie.get_language_display }}</span>
+            <span>
+              {% for cat in movie.categories.all %}
+                {{ cat.get_name_display }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+          <p class="hero-desc">{{ movie.description }}</p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="{% url 'movies:movie_detail' movie.slug %}" class="btn btn-primary">
+              <i class="bi bi-ticket-perforated-fill"></i> Book Now
+            </a>
+            <a href="{% url 'movies:movie_detail' movie.slug %}#trailer" class="btn btn-outline-light">
+              <i class="bi bi-play-circle"></i> Watch Trailer
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Slider dots -->
+  <div class="hero-dots">
+    {% for movie in featured %}
+    <button class="hero-dot {% if forloop.first %}active{% endif %}"></button>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+
+<!-- ── CATEGORY NAV ────────────────────────────────────── -->
+<div class="container-xl mt-4">
+  <div class="category-nav">
+    <a href="/" class="cat-chip {% if active_category == 'all' or not active_category %}active{% endif %}">
+      🎬 All
+    </a>
+    {% for cat in categories %}
+    <a href="/?category={{ cat.slug }}"
+       class="cat-chip {% if active_category == cat.slug %}active{% endif %}">
+      {{ cat.icon }} {{ cat.get_name_display }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+
+<!-- ── AI RECOMMENDATIONS ──────────────────────────────── -->
+{% if ai_recommendations %}
+<section class="page-section-sm">
+  <div class="container-xl">
+    <div class="ai-banner mb-4">
+      <div class="ai-icon">🤖</div>
+      <div>
+        <div class="ai-label">AI Picks for You</div>
+        <div class="ai-desc">
+          {% if user.is_authenticated %}
+            Personalized based on your watching history &amp; preferences
+          {% else %}
+            Top-rated movies curated just for you — <a href="{% url 'accounts:login' %}">Login</a> for personalized picks
+          {% endif %}
+        </div>
+      </div>
+      <button class="btn btn-outline-primary btn-sm ms-auto" id="voiceBookBtn">
+        <i class="bi bi-mic-fill"></i> Voice Book
+      </button>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title">AI Recommendations</h2>
+    </div>
+
+    <div class="row g-3">
+      {% for movie in ai_recommendations %}
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        {% include 'partials/movie_card.html' with movie=movie %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+<!-- ── MOVIES GRID ─────────────────────────────────────── -->
+<section class="page-section-sm">
+  <div class="container-xl">
+    <div class="section-header">
+      <h2 class="section-title">
+        {% if active_category and active_category != 'all' %}
+          {{ active_category|title }} Movies
+        {% elif search_query %}
+          Results for "{{ search_query }}"
+        {% else %}
+          Now Showing
+        {% endif %}
+      </h2>
+      <span class="text-muted small">{{ movies.count }} movie{{ movies.count|pluralize }}</span>
+    </div>
+
+    {% if movies %}
+    <div class="row g-3">
+      {% for movie in movies %}
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        {% include 'partials/movie_card.html' with movie=movie %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <div style="font-size:4rem">🎬</div>
+      <h4 class="mt-3">No movies found</h4>
+      <p class="text-muted">Try a different category or search term</p>
+      <a href="/" class="btn btn-primary">Browse All Movies</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

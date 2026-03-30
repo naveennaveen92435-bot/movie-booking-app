@@ -1,0 +1,158 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}{{ action }} Movie — Admin{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">{{ action|upper }} MOVIE</h2>
+  <a href="{% url 'admin_panel:movie_list' %}" class="btn btn-outline-light">
+    <i class="bi bi-arrow-left"></i> Back
+  </a>
+</div>
+
+<div class="admin-table-wrap p-4">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-4">
+
+      <div class="col-md-8">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label">Movie Title *</label>
+            <input type="text" name="title" class="form-control" required
+                   value="{{ movie.title|default:'' }}" placeholder="e.g. Inception">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Slug *</label>
+            <input type="text" name="slug" class="form-control" required
+                   value="{{ movie.slug|default:'' }}" placeholder="e.g. inception">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Description *</label>
+            <textarea name="description" class="form-control" rows="4" required
+                      placeholder="Movie synopsis...">{{ movie.description|default:'' }}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Director</label>
+            <input type="text" name="director" class="form-control"
+                   value="{{ movie.director|default:'' }}" placeholder="Director name">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Cast (comma separated)</label>
+            <input type="text" name="cast" class="form-control"
+                   value="{{ movie.cast|default:'' }}" placeholder="Actor 1, Actor 2">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Duration (minutes)</label>
+            <input type="number" name="duration_minutes" class="form-control"
+                   value="{{ movie.duration_minutes|default:120 }}" min="30" max="300">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Release Date</label>
+            <input type="date" name="release_date" class="form-control"
+                   value="{{ movie.release_date|date:'Y-m-d'|default:'' }}">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">IMDb Score</label>
+            <input type="number" name="imdb_score" class="form-control"
+                   value="{{ movie.imdb_score|default:7.0 }}" step="0.1" min="1" max="10">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Language</label>
+            <select name="language" class="form-select">
+              <option value="english" {% if movie.language == 'english' %}selected{% endif %}>English</option>
+              <option value="hindi" {% if movie.language == 'hindi' %}selected{% endif %}>Hindi</option>
+              <option value="telugu" {% if movie.language == 'telugu' %}selected{% endif %}>Telugu</option>
+              <option value="tamil" {% if movie.language == 'tamil' %}selected{% endif %}>Tamil</option>
+              <option value="malayalam" {% if movie.language == 'malayalam' %}selected{% endif %}>Malayalam</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Rating</label>
+            <select name="rating" class="form-select">
+              <option value="U" {% if movie.rating == 'U' %}selected{% endif %}>U</option>
+              <option value="UA" {% if movie.rating == 'UA' %}selected{% endif %}>UA</option>
+              <option value="A" {% if movie.rating == 'A' %}selected{% endif %}>A</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Categories</label>
+            <select name="categories" class="form-select" multiple>
+              {% for cat in categories %}
+              <option value="{{ cat.id }}"
+                {% if movie and cat in movie.categories.all %}selected{% endif %}>
+                {{ cat.get_name_display }}
+              </option>
+              {% endfor %}
+            </select>
+            <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Poster URL (or upload below)</label>
+            <input type="url" name="poster_url" class="form-control"
+                   value="{{ movie.poster_url|default:'' }}" placeholder="https://…">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Upload Poster</label>
+            <input type="file" name="poster" class="form-control" accept="image/*">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Trailer URL (YouTube embed)</label>
+            <input type="url" name="trailer_url" class="form-control"
+                   value="{{ movie.trailer_url|default:'' }}"
+                   placeholder="https://www.youtube.com/embed/VIDEO_ID">
+            <small class="text-muted">Use YouTube embed URL: youtube.com/embed/…</small>
+          </div>
+          <div class="col-12">
+            <label class="form-label">AI Tags (comma separated keywords)</label>
+            <input type="text" name="tags" class="form-control"
+                   value="{{ movie.tags|default:'' }}"
+                   placeholder="heist, time-travel, mind-bending, thriller">
+          </div>
+          <div class="col-12 d-flex gap-4">
+            <div class="form-check">
+              <input type="checkbox" name="is_featured" class="form-check-input" id="isFeatured"
+                     {% if movie.is_featured %}checked{% endif %}>
+              <label class="form-check-label" for="isFeatured">Featured (show in hero slider)</label>
+            </div>
+            {% if movie %}
+            <div class="form-check">
+              <input type="checkbox" name="is_active" class="form-check-input" id="isActive"
+                     {% if movie.is_active %}checked{% endif %}>
+              <label class="form-check-label" for="isActive">Active</label>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="col-md-4">
+        {% if movie and movie.get_poster_url %}
+        <div class="mb-3">
+          <label class="form-label">Current Poster</label>
+          <img src="{{ movie.get_poster_url }}" alt="Poster"
+               style="width:100%;max-width:200px;border-radius:8px;display:block">
+        </div>
+        {% endif %}
+        <div class="p-3 rounded-xl" style="background:rgba(245,197,24,.05);border:1px solid rgba(245,197,24,.2)">
+          <div style="font-size:.75rem;color:var(--accent-gold);font-weight:600;margin-bottom:8px">💡 Tips</div>
+          <ul style="font-size:.78rem;color:var(--text-muted);padding-left:16px;margin:0">
+            <li class="mb-1">Slug must be unique (e.g. "inception-2010")</li>
+            <li class="mb-1">Trailer URL: youtube.com/embed/VIDEO_ID</li>
+            <li class="mb-1">AI Tags help recommendation engine</li>
+            <li>Featured movies appear in homepage hero</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-4 pt-4 d-flex gap-3" style="border-top:1px solid var(--border)">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-circle"></i> {{ action }} Movie
+      </button>
+      <a href="{% url 'admin_panel:movie_list' %}" class="btn btn-outline-light">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

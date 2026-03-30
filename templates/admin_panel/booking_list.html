@@ -1,0 +1,47 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Bookings — Admin{% endblock %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">BOOKINGS</h2>
+  <div class="d-flex gap-2">
+    {% for s, label in booking.STATUS_CHOICES|default:'' %}{% endfor %}
+    <a href="?status=confirmed" class="btn btn-sm {% if status_filter == 'confirmed' %}btn-primary{% else %}btn-outline-light{% endif %}">Confirmed</a>
+    <a href="?status=cancelled" class="btn btn-sm {% if status_filter == 'cancelled' %}btn-primary{% else %}btn-outline-light{% endif %}">Cancelled</a>
+    <a href="?" class="btn btn-sm {% if not status_filter %}btn-primary{% else %}btn-outline-light{% endif %}">All</a>
+  </div>
+</div>
+<div class="admin-table-wrap">
+  <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead><tr><th>Booking ID</th><th>User</th><th>Movie</th><th>Show</th><th>Seats</th><th>Amount</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for booking in bookings %}
+        <tr>
+          <td class="mono" style="font-size:.72rem">{{ booking.booking_id|truncatechars:12 }}</td>
+          <td>{{ booking.user.username }}</td>
+          <td>{{ booking.show.movie.title|truncatechars:20 }}</td>
+          <td style="font-size:.78rem;color:var(--text-muted)">{{ booking.show.show_date|date:"d M" }} {{ booking.show.show_time|time:"H:i" }}</td>
+          <td style="font-size:.8rem">{{ booking.seats|truncatechars:20 }}</td>
+          <td class="mono">₹{{ booking.total_amount }}</td>
+          <td style="font-size:.8rem">{{ booking.get_payment_method_display }}</td>
+          <td><span class="booking-status status-{{ booking.status }}">{{ booking.get_status_display }}</span></td>
+          <td>
+            <div class="d-flex gap-1">
+              <a href="{% url 'bookings:ticket_confirmation' booking.booking_id %}" target="_blank" class="btn btn-outline-light btn-sm"><i class="bi bi-eye"></i></a>
+              {% if booking.status == 'confirmed' %}
+              <form method="post" action="{% url 'admin_panel:cancel_booking' booking.booking_id %}" onsubmit="return confirm('Cancel and refund this booking?')">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm"><i class="bi bi-x-circle"></i></button>
+              </form>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="9" class="text-center text-muted py-4">No bookings found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

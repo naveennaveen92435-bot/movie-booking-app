@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Select Seats — {{ show.movie.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.seat-section-wrap { max-width: 700px; margin: 0 auto; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-xl py-4">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb" style="background:none;padding:0;font-size:.85rem">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'movies:movie_detail' show.movie.slug %}">{{ show.movie.title }}</a></li>
+      <li class="breadcrumb-item active">Select Seats</li>
+    </ol>
+  </nav>
+
+  <!-- Show Info Bar -->
+  <div class="d-flex align-items-center gap-3 p-3 mb-4 rounded-xl" style="background:var(--bg-card);border:1px solid var(--border)">
+    <img src="{{ show.movie.get_poster_url }}" alt="{{ show.movie.title }}"
+         style="width:50px;height:68px;object-fit:cover;border-radius:6px"
+         onerror="this.src='{% static 'images/default_poster.jpg' %}'">
+    <div class="flex-grow-1">
+      <h5 class="mb-1">{{ show.movie.title }}</h5>
+      <div class="text-muted small d-flex flex-wrap gap-3">
+        <span><i class="bi bi-calendar3"></i> {{ show.show_date|date:"D, d M Y" }}</span>
+        <span><i class="bi bi-clock"></i> {{ show.show_time|time:"H:i" }}</span>
+        <span><i class="bi bi-building"></i> {{ show.screen.theatre.name }} · {{ show.screen.name }}</span>
+        <span><i class="bi bi-cash"></i> ₹{{ show.ticket_price }} / seat</span>
+      </div>
+    </div>
+    <!-- Hold timer -->
+    <div class="hold-timer d-none" id="holdTimerWrap">
+      <i class="bi bi-hourglass-split text-warning"></i>
+      <div>
+        <div style="font-size:.7rem;color:var(--text-muted)">Seats held for</div>
+        <div class="timer-display" id="holdTimer">10:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- ── SEAT MAP ───────────────────────────────────────── -->
+    <div class="col-lg-8">
+      <div class="glass-card p-4">
+
+        <!-- Live availability heatmap -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Select Your Seats</h5>
+          <div style="font-size:.8rem;color:var(--text-muted)">
+            <span id="availCount" class="text-success fw-600">Loading…</span> available
+          </div>
+        </div>
+
+        <!-- AI Suggestion -->
+        {% if ai_suggested %}
+        <div class="ai-banner mb-4" style="padding:12px 16px">
+          <span>🤖</span>
+          <div>
+            <div class="ai-label" style="font-size:.7rem">AI Suggestion</div>
+            <div class="ai-desc">
+              Best seats:
+              {% for seat in ai_suggested %}
+              <span class="seat-tag" id="aiSeat_{{ seat }}" style="cursor:pointer"
+                    onclick="selectAISeat('{{ seat }}')">{{ seat }}</span>
+              {% endfor %}
+              <small class="text-muted ms-2">Click to select</small>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Screen indicator -->
+        <div class="screen-indicator">◈ S C R E E N ◈</div>
+
+        <!-- Seat Grid -->
+        <div class="seat-section-wrap">
+          <div class="seat-grid" id="seatGrid">
+            {% for row_data in seat_grid %}
+            <div class="seat-row">
+              <div class="row-label">{{ row_data.row }}</div>
+              {% for seat in row_data.seats %}
+              <div class="seat {{ seat.status }}"
+                   id="seat_{{ seat.label }}"
+                   data-label="{{ seat.label }}"
+                   data-status="{{ seat.status }}"
+                   title="{{ seat.label }}"
+                   {% if seat.status == 'available' %}onclick="toggleSeat(this)"{% endif %}>
+                {{ seat.label }}
+              </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="seat-legend mt-4">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#1e3a2a;border:1.5px solid #06d6a0"></div>
+            Available
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#2a1a1a;border:1.5px solid #e63946"></div>
+            Booked
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#2a2510;border:1.5px solid #ffc107"></div>
+            Hold
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent-gold)"></div>
+            Selected
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#1a1a2e;border:1.5px solid var(--accent-blue)"></div>
+            AI Pick
+          </div>
+        </div>
+
+        <!-- AI preference selector -->
+        <div class="mt-4 pt-3" style="border-top:1px solid var(--border)">
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <span style="font-size:.85rem;color:var(--text-muted)">🤖 AI suggest:</span>
+            <select class="form-select form-select-sm" id="seatPref" style="width:auto">
+              <option value="center">Center (Best View)</option>
+              <option value="front">Front Row</option>
+              <option value="back">Back Row</option>
+              <option value="aisle">Aisle Seats</option>
+            </select>
+            <input type="number" id="aiNumSeats" class="form-control form-control-sm" style="width:70px" value="2" min="1" max="10">
+            <button class="btn btn-outline-primary btn-sm" onclick="fetchAISuggestion()">
+              <i class="bi bi-robot"></i> Suggest
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── FOOD & SUMMARY ─────────────────────────────────── -->
+    <div class="col-lg-4">
+
+      <!-- Selected seats summary -->
+      <div class="order-summary mb-4">
+        <h6 class="mb-3" style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px">ORDER SUMMARY</h6>
+
+        <div id="selectedSeatsDisplay" class="mb-3">
+          <div class="text-muted small mb-2">Selected Seats</div>
+          <div id="seatTagsWrap" class="ticket-seats">
+            <span class="text-muted small">None selected</span>
+          </div>
+        </div>
+
+        <div class="summary-row">
+          <span>Tickets (<span id="ticketCount">0</span> × ₹{{ show.ticket_price }})</span>
+          <span class="amount" id="ticketTotal">₹0</span>
+        </div>
+        <div class="summary-row" id="foodSummaryRow" style="display:none">
+          <span>Food & Drinks</span>
+          <span class="amount" id="foodTotal">₹0</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span class="amount" id="grandTotal">₹0</span>
+        </div>
+
+        <button class="btn btn-primary w-100 mt-3" id="proceedBtn" disabled onclick="proceedToPayment()">
+          <i class="bi bi-arrow-right-circle-fill"></i> Proceed to Payment
+        </button>
+      </div>
+
+      <!-- Food Pre-booking -->
+      <div class="glass-card p-3">
+        <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:16px">
+          🍿 ADD FOOD & DRINKS
+        </h6>
+        {% for item in food_items %}
+        <div class="food-card mb-2">
+          <div>
+            <div class="food-name">{{ item.name }}</div>
+            <div class="food-price">₹{{ item.price }}</div>
+            <div style="font-size:.72rem;color:var(--text-muted)">{{ item.get_category_display }}</div>
+          </div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty({{ item.id }}, -1)">−</button>
+            <span class="qty-display" id="qty_{{ item.id }}">0</span>
+            <button class="qty-btn" onclick="changeQty({{ item.id }}, 1)">+</button>
+          </div>
+          <input type="hidden" id="foodPrice_{{ item.id }}" value="{{ item.price }}">
+        </div>
+        {% empty %}
+        <p class="text-muted small text-center py-2">No food items available</p>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const SHOW_ID = {{ show.id }};
+const TICKET_PRICE = {{ show.ticket_price }};
+let selectedSeats = new Set();
+let foodItems = {};
+let holdTimer = null;
+let holdExpires = null;
+
+// ── Seat toggle ───────────────────────────────────────────
+function toggleSeat(el) {
+  const label = el.dataset.label;
+  if (el.dataset.status !== 'available' && !el.classList.contains('selected')) return;
+
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    el.classList.add('available');
+    selectedSeats.delete(label);
+  } else {
+    el.classList.remove('available');
+    el.classList.add('selected');
+    selectedSeats.add(label);
+  }
+  updateSummary();
+}
+
+// ── Select AI suggested seat ──────────────────────────────
+function selectAISeat(label) {
+  const el = document.getElementById('seat_' + label);
+  if (el && el.dataset.status === 'available') toggleSeat(el);
+}
+
+// ── Update order summary ──────────────────────────────────
+function updateSummary() {
+  const count = selectedSeats.size;
+  const ticketTotal = count * TICKET_PRICE;
+  let foodTotal = 0;
+  for (const [id, qty] of Object.entries(foodItems)) {
+    const price = parseFloat(document.getElementById('foodPrice_' + id)?.value || 0);
+    foodTotal += price * qty;
+  }
+  const grand = ticketTotal + foodTotal;
+
+  document.getElementById('ticketCount').textContent = count;
+  document.getElementById('ticketTotal').textContent = '₹' + ticketTotal.toFixed(2);
+  document.getElementById('foodTotal').textContent = '₹' + foodTotal.toFixed(2);
+  document.getElementById('grandTotal').textContent = '₹' + grand.toFixed(2);
+  document.getElementById('foodSummaryRow').style.display = foodTotal > 0 ? 'flex' : 'none';
+
+  // Seat tags
+  const wrap = document.getElementById('seatTagsWrap');
+  if (count === 0) {
+    wrap.innerHTML = '<span class="text-muted small">None selected</span>';
+  } else {
+    wrap.innerHTML = [...selectedSeats].map(s => `<span class="seat-tag">${s}</span>`).join('');
+  }
+
+  // Proceed btn
+  const btn = document.getElementById('proceedBtn');
+  btn.disabled = count === 0;
+
+  // Hold seats on selection change (debounced)
+  clearTimeout(window._holdDebounce);
+  if (count > 0) {
+    window._holdDebounce = setTimeout(holdSeats, 800);
+  }
+}
+
+// ── Hold seats via AJAX ───────────────────────────────────
+function holdSeats() {
+  fetch('/bookings/api/hold-seats/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+    body: JSON.stringify({ show_id: SHOW_ID, seats: [...selectedSeats] })
+  }).then(r => r.json()).then(data => {
+    if (data.failed && data.failed.length > 0) {
+      data.failed.forEach(label => {
+        const el = document.getElementById('seat_' + label);
+        if (el) { el.className = 'seat hold'; el.dataset.status = 'hold'; }
+        selectedSeats.delete(label);
+      });
+      updateSummary();
+      alert('Some seats were just taken: ' + data.failed.join(', '));
+    }
+    if (data.expires_at) startHoldTimer(new Date(data.expires_at));
+  });
+}
+
+// ── Hold countdown timer ──────────────────────────────────
+function startHoldTimer(expiresAt) {
+  const wrap = document.getElementById('holdTimerWrap');
+  const display = document.getElementById('holdTimer');
+  wrap.classList.remove('d-none');
+  clearInterval(holdTimer);
+
+  holdTimer = setInterval(() => {
+    const remaining = Math.max(0, expiresAt - Date.now());
+    const mins = Math.floor(remaining / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    display.textContent = `${mins}:${secs.toString().padStart(2,'0')}`;
+    if (remaining < 60000) display.classList.add('urgent');
+    if (remaining <= 0) {
+      clearInterval(holdTimer);
+      display.textContent = 'EXPIRED';
+      selectedSeats.forEach(label => {
+        const el = document.getElementById('seat_' + label);
+        if (el) { el.className = 'seat available'; el.dataset.status = 'available'; }
+      });
+      selectedSeats.clear();
+      updateSummary();
+      alert('Seat hold expired. Please re-select seats.');
+    }
+  }, 1000);
+}
+
+// ── Food quantity ─────────────────────────────────────────
+function changeQty(id, delta) {
+  const display = document.getElementById('qty_' + id);
+  let qty = parseInt(display.textContent) + delta;
+  qty = Math.max(0, Math.min(10, qty));
+  display.textContent = qty;
+  if (qty === 0) delete foodItems[id]; else foodItems[id] = qty;
+  updateSummary();
+}
+
+// ── AI suggestion fetch ───────────────────────────────────
+function fetchAISuggestion() {
+  const pref = document.getElementById('seatPref').value;
+  const num = document.getElementById('aiNumSeats').value;
+  fetch(`/bookings/api/ai-seats/${SHOW_ID}/?num=${num}&pref=${pref}`)
+    .then(r => r.json()).then(data => {
+      // Clear current selection
+      selectedSeats.forEach(label => {
+        const el = document.getElementById('seat_' + label);
+        if (el) { el.classList.remove('selected'); el.classList.add('available'); }
+      });
+      selectedSeats.clear();
+      // Apply suggestions
+      data.suggested.forEach(label => {
+        const el = document.getElementById('seat_' + label);
+        if (el && el.dataset.status === 'available') {
+          el.classList.add('selected', 'ai-suggested');
+          el.classList.remove('available');
+          selectedSeats.add(label);
+        }
+      });
+      updateSummary();
+    });
+}
+
+// ── Live heatmap refresh ──────────────────────────────────
+function refreshHeatmap() {
+  fetch(`/api/heatmap/${SHOW_ID}/`)
+    .then(r => r.json()).then(data => {
+      document.getElementById('availCount').textContent = data.available;
+      // Update seats that changed externally
+      for (const [label, status] of Object.entries(data.seat_map)) {
+        if (!selectedSeats.has(label)) {
+          const el = document.getElementById('seat_' + label);
+          if (el && el.dataset.status !== status) {
+            el.className = 'seat ' + status;
+            el.dataset.status = status;
+            if (status !== 'available') el.onclick = null;
+          }
+        }
+      }
+    });
+}
+setInterval(refreshHeatmap, 15000);
+refreshHeatmap();
+
+// ── Proceed to payment ────────────────────────────────────
+function proceedToPayment() {
+  if (selectedSeats.size === 0) return;
+  // Store food items in session storage for payment page
+  const foodData = Object.entries(foodItems).map(([id, qty]) => ({ food_id: id, qty }));
+  sessionStorage.setItem('foodOrders', JSON.stringify(foodData));
+  sessionStorage.setItem('selectedSeats', JSON.stringify([...selectedSeats]));
+  window.location.href = `/bookings/payment/${SHOW_ID}/`;
+}
+
+function getCookie(name) {
+  const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
+</script>
+{% endblock %}

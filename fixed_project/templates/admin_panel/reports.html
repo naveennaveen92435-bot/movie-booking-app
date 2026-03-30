@@ -1,0 +1,130 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Reports — Admin{% endblock %}
+{% block extra_css %}<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>{% endblock %}
+
+{% block admin_content %}
+<h2 style="font-family:var(--font-display);letter-spacing:2px;margin-bottom:28px">REPORTS & ANALYTICS</h2>
+
+<!-- Revenue KPI -->
+<div class="row g-3 mb-5">
+  <div class="col-md-4">
+    <div class="stat-card" style="--accent-color:var(--accent-gold)">
+      <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+      <div class="stat-value">₹{{ total_revenue|floatformat:0 }}</div>
+      <div class="stat-label">Total Revenue</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mb-5">
+  <!-- Monthly Revenue Chart -->
+  <div class="col-lg-8">
+    <div class="admin-table-wrap p-4">
+      <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:20px">MONTHLY REVENUE (12 MONTHS)</h6>
+      <canvas id="monthlyChart" height="120"></canvas>
+    </div>
+  </div>
+
+  <!-- Payment methods -->
+  <div class="col-lg-4">
+    <div class="admin-table-wrap p-4">
+      <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:20px">PAYMENT METHODS</h6>
+      <canvas id="paymentChart" height="180"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <!-- Top movies -->
+  <div class="col-lg-7">
+    <div class="admin-table-wrap">
+      <div class="p-4" style="border-bottom:1px solid var(--border)">
+        <h6 style="font-family:var(--font-display);letter-spacing:1px;margin:0">TOP BOOKED MOVIES</h6>
+      </div>
+      <table class="admin-table">
+        <thead><tr><th>#</th><th>Movie</th><th>Bookings</th><th>Revenue</th></tr></thead>
+        <tbody>
+          {% for movie in top_movies %}
+          <tr>
+            <td style="color:var(--accent-gold);font-weight:700">{{ forloop.counter }}</td>
+            <td style="font-weight:500">{{ movie.title }}</td>
+            <td class="mono">{{ movie.booking_count }}</td>
+            <td class="mono" style="color:var(--accent-green)">₹{{ movie.revenue|floatformat:0|default:"—" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Category popularity -->
+  <div class="col-lg-5">
+    <div class="admin-table-wrap p-4">
+      <h6 style="font-family:var(--font-display);letter-spacing:1px;margin-bottom:16px">GENRE POPULARITY</h6>
+      {% for cat in cat_popularity %}
+      <div class="mb-3">
+        <div class="d-flex justify-content-between mb-1">
+          <span style="font-size:.85rem">{{ cat.get_name_display }}</span>
+          <span class="mono" style="font-size:.8rem;color:var(--accent-gold)">{{ cat.booking_count }}</span>
+        </div>
+        <div style="height:6px;background:var(--bg-secondary);border-radius:3px">
+          {% if cat_popularity.0.booking_count > 0 %}
+          <div style="height:100%;border-radius:3px;background:var(--accent-gold);width:{% widthratio cat.booking_count cat_popularity.0.booking_count 100 %}%"></div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const monthlyData = {{ monthly_data|safe }};
+const paymentDist = {{ payment_dist|safe }};
+
+// Monthly revenue line chart
+new Chart(document.getElementById('monthlyChart').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: monthlyData.map(d => d.month),
+    datasets: [{
+      label: 'Revenue (₹)',
+      data: monthlyData.map(d => d.revenue),
+      borderColor: '#f5c518',
+      backgroundColor: 'rgba(245,197,24,0.08)',
+      borderWidth: 2,
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#f5c518',
+    }]
+  },
+  options: {
+    plugins: { legend: { labels: { color: '#888' } } },
+    scales: {
+      x: { ticks: { color: '#888', maxTicksLimit: 6 }, grid: { color: 'rgba(255,255,255,.04)' } },
+      y: { ticks: { color: '#888', callback: v => '₹'+v }, grid: { color: 'rgba(255,255,255,.04)' } }
+    }
+  }
+});
+
+// Payment methods donut chart
+const methodColors = { upi: '#4cc9f0', card: '#f5c518', cash: '#06d6a0' };
+new Chart(document.getElementById('paymentChart').getContext('2d'), {
+  type: 'doughnut',
+  data: {
+    labels: paymentDist.map(d => d.payment_method.toUpperCase()),
+    datasets: [{
+      data: paymentDist.map(d => d.count),
+      backgroundColor: paymentDist.map(d => methodColors[d.payment_method] || '#888'),
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    plugins: { legend: { labels: { color: '#888', font: { size: 11 } } } },
+    cutout: '65%',
+  }
+});
+</script>
+{% endblock %}

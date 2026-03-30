@@ -1,0 +1,55 @@
+{% extends 'admin_panel/base_admin.html' %}
+{% block title %}Users — Admin{% endblock %}
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 style="font-family:var(--font-display);letter-spacing:2px">USERS</h2>
+  <span class="text-muted small">{{ users.count }} total users</span>
+</div>
+<div class="admin-table-wrap">
+  <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead><tr><th>User</th><th>Email</th><th>Phone</th><th>City</th><th>Joined</th><th>Bookings</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:30px;height:30px;background:var(--accent-gold);color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700">
+                {{ user.username|first|upper }}
+              </div>
+              <div>
+                <div style="font-weight:600;font-size:.875rem">{{ user.username }}</div>
+                <div style="font-size:.72rem;color:var(--text-muted)">{{ user.get_full_name }}</div>
+              </div>
+            </div>
+          </td>
+          <td style="font-size:.8rem">{{ user.email|default:"—" }}</td>
+          <td style="font-size:.8rem">{{ user.profile.phone|default:"—" }}</td>
+          <td style="font-size:.8rem">{{ user.profile.city|default:"—" }}</td>
+          <td style="font-size:.78rem;color:var(--text-muted)">{{ user.date_joined|date:"d M Y" }}</td>
+          <td class="mono" style="color:var(--accent-gold)">{{ user.booking_count }}</td>
+          <td>
+            {% if user.profile.is_blocked %}
+            <span class="booking-status status-cancelled">Blocked</span>
+            {% else %}
+            <span class="booking-status status-confirmed">Active</span>
+            {% endif %}
+          </td>
+          <td>
+            <form method="post" action="{% url 'admin_panel:toggle_user_block' user.id %}"
+                  onsubmit="return confirm('Toggle block status for {{ user.username }}?')">
+              {% csrf_token %}
+              <button class="btn btn-sm {% if user.profile.is_blocked %}btn-outline-success{% else %}btn-outline-danger{% endif %}">
+                {% if user.profile.is_blocked %}<i class="bi bi-unlock"></i> Unblock{% else %}<i class="bi bi-lock"></i> Block{% endif %}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">No users found</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

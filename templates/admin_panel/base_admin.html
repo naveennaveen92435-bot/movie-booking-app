@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Admin Sidebar -->
+<div class="admin-sidebar">
+  <div class="px-4 mb-4">
+    <div style="font-family:var(--font-display);font-size:1rem;letter-spacing:2px;color:var(--accent-gold)">ADMIN PANEL</div>
+    <div style="font-size:.72rem;color:var(--text-muted)">CinéAI Management</div>
+  </div>
+
+  <div class="admin-nav-group">Overview</div>
+  <a href="{% url 'admin_panel:dashboard' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+    <i class="bi bi-speedometer2"></i> Dashboard
+  </a>
+  <a href="{% url 'admin_panel:reports' %}" class="admin-nav-item {% if request.resolver_match.url_name == 'reports' %}active{% endif %}">
+    <i class="bi bi-bar-chart-line"></i> Reports
+  </a>
+
+  <div class="admin-nav-group">Content</div>
+  <a href="{% url 'admin_panel:movie_list' %}" class="admin-nav-item">
+    <i class="bi bi-film"></i> Movies
+  </a>
+  <a href="{% url 'admin_panel:theatre_list' %}" class="admin-nav-item">
+    <i class="bi bi-building"></i> Theatres & Screens
+  </a>
+  <a href="{% url 'admin_panel:show_list' %}" class="admin-nav-item">
+    <i class="bi bi-calendar3"></i> Shows
+  </a>
+
+  <div class="admin-nav-group">Operations</div>
+  <a href="{% url 'admin_panel:booking_list' %}" class="admin-nav-item">
+    <i class="bi bi-ticket-perforated"></i> Bookings
+  </a>
+  <a href="{% url 'admin_panel:user_list' %}" class="admin-nav-item">
+    <i class="bi bi-people"></i> Users
+  </a>
+  <a href="{% url 'admin_panel:food_list' %}" class="admin-nav-item">
+    <i class="bi bi-cup-straw"></i> Food & Coupons
+  </a>
+
+  <div class="admin-nav-group">Site</div>
+  <a href="/" class="admin-nav-item">
+    <i class="bi bi-house"></i> View Site
+  </a>
+</div>
+
+<!-- Admin Content -->
+<div class="admin-content">
+  {% block admin_content %}{% endblock %}
+</div>
+{% endblock %}

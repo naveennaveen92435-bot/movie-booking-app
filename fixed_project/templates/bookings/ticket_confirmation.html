@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmed — CinéAI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <!-- Success animation -->
+    <div style="width:80px;height:80px;background:rgba(6,214,160,.15);border:2px solid var(--accent-green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;animation:successPop .5s ease-out">
+      ✓
+    </div>
+    <h2 style="font-family:var(--font-display);letter-spacing:2px;color:var(--accent-green)">BOOKING CONFIRMED!</h2>
+    <p class="text-muted">Your tickets are ready. Show QR code at the entrance.</p>
+  </div>
+
+  <!-- ── TICKET CARD ─────────────────────────────────────── -->
+  <div class="ticket-card" id="ticketCard">
+    <div class="ticket-header">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+        <div style="font-family:var(--font-display);font-size:1.5rem;letter-spacing:3px;color:var(--accent-gold)">
+          🎬 CINÉAI
+        </div>
+        <span class="booking-status status-confirmed">✓ CONFIRMED</span>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:1.8rem;letter-spacing:1px">{{ booking.show.movie.title }}</h3>
+      <div style="font-size:.85rem;color:rgba(240,240,240,.6);margin-top:6px">
+        {{ booking.show.movie.get_language_display }} ·
+        {% for cat in booking.show.movie.categories.all %}{{ cat.get_name_display }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      </div>
+    </div>
+
+    <div class="ticket-body">
+      <div class="ticket-info-grid">
+        <div class="ticket-info-item">
+          <div class="label">Date</div>
+          <div class="value">{{ booking.show.show_date|date:"D, d M Y" }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Show Time</div>
+          <div class="value" style="font-family:var(--font-mono)">{{ booking.show.show_time|time:"H:i" }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Theatre</div>
+          <div class="value">{{ booking.show.screen.theatre.name }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Screen</div>
+          <div class="value">{{ booking.show.screen.name }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Seats</div>
+          <div class="value">
+            <div class="ticket-seats mt-1">
+              {% for seat in seat_list %}
+              <span class="seat-tag">{{ seat }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Booking ID</div>
+          <div class="value mono" style="font-size:.8rem">{{ booking.booking_id|truncatechars:18 }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Payment</div>
+          <div class="value">{{ booking.get_payment_method_display }} · ₹{{ booking.total_amount }}</div>
+        </div>
+        <div class="ticket-info-item">
+          <div class="label">Booked By</div>
+          <div class="value">{{ booking.user.get_full_name|default:booking.user.username }}</div>
+        </div>
+      </div>
+
+      <!-- Food orders -->
+      {% if food_orders %}
+      <div class="mb-4 p-3 rounded-xl" style="background:var(--bg-secondary)">
+        <div class="text-muted small mb-2">🍿 Food Pre-Ordered</div>
+        {% for fo in food_orders %}
+        <div class="d-flex justify-content-between align-items-center py-1" style="font-size:.85rem">
+          <span>{{ fo.food_item.name }} × {{ fo.quantity }}</span>
+          <span class="mono" style="color:var(--accent-gold)">₹{{ fo.subtotal }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- QR Code -->
+      {% if booking.qr_code %}
+      <div class="ticket-qr">
+        <img src="{{ booking.qr_code.url }}" alt="QR Code" style="width:180px;height:180px;border-radius:8px">
+        <div class="text-muted small mt-2">Scan at entrance · Valid once only</div>
+      </div>
+      {% endif %}
+
+      <!-- Refund policy -->
+      <div class="mt-3 text-muted small text-center">
+        <i class="bi bi-info-circle"></i> {{ refund_policy }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
+    <button class="btn btn-primary" onclick="downloadTicket()">
+      <i class="bi bi-download"></i> Download Ticket
+    </button>
+    <a href="{% url 'accounts:profile' %}" class="btn btn-outline-light">
+      <i class="bi bi-person"></i> My Bookings
+    </a>
+    <a href="/" class="btn btn-outline-primary">
+      <i class="bi bi-film"></i> Browse More Movies
+    </a>
+    {% if booking.can_cancel %}
+    <form method="post" action="{% url 'bookings:cancel_booking' booking.booking_id %}"
+          onsubmit="return confirm('Cancel this booking? Refund will be processed per policy.')">
+      {% csrf_token %}
+      <button class="btn btn-outline-danger" type="submit">
+        <i class="bi bi-x-circle"></i> Cancel Booking
+      </button>
+    </form>
+    {% endif %}
+  </div>
+
+</div>
+
+<style>
+@keyframes successPop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function downloadTicket() {
+  // Simple print-based download
+  const ticket = document.getElementById('ticketCard');
+  const w = window.open('', '_blank');
+  w.document.write(`
+    <html><head><title>Ticket - {{ booking.show.movie.title }}</title>
+    <style>
+      body { font-family: 'DM Sans', sans-serif; background: #0a0a0f; color: #f0f0f0; }
+      .ticket-card { max-width:520px;margin:20px auto;border:1px solid #333;border-radius:16px;overflow:hidden; }
+      .ticket-header { background: linear-gradient(135deg,#1a1a2e,#16213e);padding:28px; }
+      .ticket-body { padding:28px;background:#1a1a26; }
+      .seat-tag { background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.3);color:#f5c518;padding:3px 10px;border-radius:20px;font-size:12px;margin:2px;display:inline-block; }
+      .label { font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px; }
+      .value { font-weight:600;margin-top:2px; }
+      .grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px; }
+    </style></head><body>${ticket.outerHTML}</body></html>
+  `);
+  w.document.close();
+  w.print();
+}
+</script>
+{% endblock %}
