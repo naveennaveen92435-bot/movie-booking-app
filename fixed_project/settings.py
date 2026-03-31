@@ -104,6 +104,6 @@ import cloudinary
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'deg2lhudi',
     'API_KEY': '591213154712188',
-    'API_SECRET': 'ikkade_mee_full_secret_paste_cheyyandi',
+    'API_SECRET': 'it6dAj6fuU94K1jNz_gf4I5PTL4',
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
