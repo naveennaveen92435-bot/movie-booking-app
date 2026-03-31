@@ -61,11 +61,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
+import os
 import dj_database_url
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:YOUR_NEW_PASSWORD@db.srjancucpgdawxgskfrf.supabase.co:5432/postgres',
-        conn_max_age=600
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
