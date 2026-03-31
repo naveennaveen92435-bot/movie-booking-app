@@ -1,0 +1,325 @@
+[
+{
+  "model": "movies.movie",
+  "pk": 15,
+  "fields": {
+    "title": "Youth",
+    "slug": "youth",
+    "description": "Youth follows 15-year-old Praveen as he enters adolescence determined to find true love before school ends. Through a series of relationships, friendships, and heartbreaks, he gradually discovers the true meaning of love, shaping his maturity and outlook on life.",
+    "cast": "Ken Karunas, Anishma Anilkumar, Devadarshini, Suraj Venjaramoodu, Priyanshi Yadav, Meenakshi Dinesh, Abison Thevarasa",
+    "director": "Ken Karunas",
+    "duration_minutes": 142,
+    "release_date": "2026-03-27",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "9.7",
+    "poster": "posters/youth.jpg",
+    "poster_url": "https://i.ytimg.com/vi/T372cZK4C6c/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDJ0altKbXNbmQO53huUgxtJJVNBw",
+    "trailer_url": "https://www.youtube.com/embed/VDfU3pLaGdg",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T18:02:17.675Z",
+    "tags": "youth movie, telugu romantic movie, teenage love story, 2026 movie, comedy drama romance, coming of age, indian cinema, love story",
+    "categories": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 20,
+  "fields": {
+    "title": "Happy Raj",
+    "slug": "happy-raj",
+    "description": "Happy Raj is a heartfelt comedy-drama romantic entertainer starring G. V. Prakash Kumar, Abbas, and Sri Gouri Priya in lead roles. The film blends humor, emotions, and romance, following the life journey of Raj and the relationships that shape his world.",
+    "cast": "G. V. Prakash Kumar, Abbas, Sri Gouri Priya, George Maryan, Geetha Kailasam, Adhirchi Arun, Madurai Muthu, Mahesh Devi, Prathana Nathan",
+    "director": "Maria Raja Elanchezian",
+    "duration_minutes": 156,
+    "release_date": "2026-03-27",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "9.5",
+    "poster": "posters/happy_raj.jpg",
+    "poster_url": "https://www.instagram.com/p/DSfdPiVAduW/",
+    "trailer_url": "https://www.youtube.com/embed/zjTfCC6ZrSU",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T20:52:15.815Z",
+    "tags": "happy raj movie, gv prakash kumar, tamil romantic comedy, telugu dubbed movie, comedy drama romance, 2026 movie release",
+    "categories": [
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 22,
+  "fields": {
+    "title": "Band Melam",
+    "slug": "band-melam",
+    "description": "Giri and Raaji grew up together in a small village; their love and bonding also grew, but changing fortunes and misunderstandings drove them and their families apart. While Raaji moves ahead with her studies, Giri searches for his path through music with his village band. Life takes them in completely different directions until circumstances bring them face to face again. What really unfolds between them forms the rest of the story.",
+    "cast": "Harsh Roshan, Sridevi Apalla, Saikumar Pudipeddi",
+    "director": "Sathish Javvaji",
+    "duration_minutes": 141,
+    "release_date": "2026-03-26",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "9.4",
+    "poster": "posters/bandmelam1.avif",
+    "poster_url": "https://www.harkins.com/movies/band-melam-telugu-subtitled/2026-03-29",
+    "trailer_url": "https://www.youtube.com/embed/DHu2ZHqBJek",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-30T10:03:22.897Z",
+    "tags": "band melam, telugu, drama, romance, village love story, music, 2026",
+    "categories": [
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 14,
+  "fields": {
+    "title": "Dhurandhar The Revenge",
+    "slug": "dhurandhar-the-revenge",
+    "description": "Dhurandhar The Revenge introduces Jaskirat Singh Rangi, tracing the chain of events that compel him to become Hamza Ali Mazari, and follows his rise as he operates deep inside Pakistan. The film is set to return this time in Hindi, Telugu, Tamil, Kannada and Malayalam.",
+    "cast": "Ranveer Singh, Sanjay Dutt, R. Madhavan, Arjun Rampal, Sara Arjun, Rakesh Bedi, Danish Pandor, Saumya Tandon",
+    "director": "Aditya Dhar",
+    "duration_minutes": 229,
+    "release_date": "2026-03-19",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "9.5",
+    "poster": "posters/dhurandhar-the-revenge-poster-detail-1773918029.avif",
+    "poster_url": "https://lh5.googleusercontent.com/proxy/_mbLTW92JCM-BAdKCkn566LWKxhuPuCDgQj17id8u61DunBiiW-UxWP2Yo-tRSC_qd0pV4BAvhjFMZQBhh7xgwT3ieQ6si8PWZ-9t1_qiNVd-9cPyWDqBiCLbL4Ijg",
+    "trailer_url": "https://www.youtube.com/embed/rV6kEsAyrdY",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T13:23:31.231Z",
+    "tags": "action, thriller, spy, pakistan, ranveer singh, aditya dhar, telugu, bollywood, undercover, revenge",
+    "categories": [
+      1,
+      10,
+      5,
+      2,
+      6,
+      3,
+      4,
+      9,
+      8,
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 18,
+  "fields": {
+    "title": "Ustaad Bhagat Singh",
+    "slug": "ustaad-bhagat-singh",
+    "description": "Inspired by his teacher, who named him Bhagat Singh and shaped his values, a tribal boy grows into a fearless man rooted in strong morals and unwavering courage. Standing firm against injustice, he takes on powerful forces despite overwhelming odds. Ustaad Bhagat Singh is a story of strength, integrity, and purpose.",
+    "cast": "Pawan Kalyan, Sreeleela, Raashi Khanna, Parthiban, Rao Ramesh, K. S. Ravikumar, Ramki",
+    "director": "Harish Shankar",
+    "duration_minutes": 154,
+    "release_date": "2026-03-19",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "7.5",
+    "poster": "posters/ustaad_bhagat_singh.jpg",
+    "poster_url": "https://in.pinterest.com/pin/ustaad-bhagat-singh-movie-poster-hd--633248397645371440/",
+    "trailer_url": "https://www.youtube.com/embed/MLU5ZEp9YDo",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T20:01:58.333Z",
+    "tags": "pawan kalyan movie, ustaad bhagat singh, telugu action movie, harish shankar film, mass entertainer, commercial cinema, dsp music, 2026 release, indian cinema",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 4,
+  "fields": {
+    "title": "Oppenheimer",
+    "slug": "oppenheimer",
+    "description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+    "cast": "Cillian Murphy, Emily Blunt, Robert Downey Jr.",
+    "director": "Christopher Nolan",
+    "duration_minutes": 180,
+    "release_date": "2023-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "8.9",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    "trailer_url": "https://www.youtube.com/embed/uYPbbksJxIg",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.039Z",
+    "tags": "atomic,bomb,war,scientist,history",
+    "categories": [
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 8,
+  "fields": {
+    "title": "RRR",
+    "slug": "rrr",
+    "description": "A fictitious story about two legendary revolutionaries and their journey away from home before they began the fight for their nation.",
+    "cast": "N.T. Rama Rao Jr., Ram Charan, Alia Bhatt",
+    "director": "S.S. Rajamouli",
+    "duration_minutes": 187,
+    "release_date": "2022-06-15",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "7.9",
+    "poster": "posters/RRR-2022.jpeg",
+    "poster_url": "https://4kwallpapers.com/movies/rrr-ram-charan-alluri-sitarama-raju-telugu-movie-indian-7770.html",
+    "trailer_url": "https://www.youtube.com/embed/2_BkCz3OnlY",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.066Z",
+    "tags": "revolution,friendship,british-raj,telugu,period",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 9,
+  "fields": {
+    "title": "Pushpa: The Rise",
+    "slug": "pushpa-the-rise",
+    "description": "A laborer rises through the ranks of a red sandalwood smuggling syndicate.",
+    "cast": "Allu Arjun, Fahadh Faasil, Rashmika Mandanna",
+    "director": "Sukumar",
+    "duration_minutes": 179,
+    "release_date": "2021-06-15",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "7.6",
+    "poster": "posters/pushpa-the-rise-2021-movie.jpg",
+    "poster_url": "https://image.tmdb.org/t/p/w500/r9oEXsGzM3HqXvFVjn8MVEkfDx4.jpg",
+    "trailer_url": "https://www.youtube.com/embed/Q1NKMPhP8PY",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.073Z",
+    "tags": "smuggling,jungle,red-sanders,mass,telugu",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 12,
+  "fields": {
+    "title": "Dangal",
+    "slug": "dangal",
+    "description": "Former wrestler Mahavir Singh Phogat trains his daughters to become world-class wrestlers.",
+    "cast": "Aamir Khan, Fatima Sana Shaikh, Sanya Malhotra",
+    "director": "Nitesh Tiwari",
+    "duration_minutes": 161,
+    "release_date": "2016-06-15",
+    "language": "hindi",
+    "rating": "U",
+    "imdb_score": "8.4",
+    "poster": "posters/dangalposter.jpg",
+    "poster_url": "https://image.tmdb.org/t/p/w500/yjjet2M6Gq41C4s2b5xVNX8vLi9.jpg",
+    "trailer_url": "https://www.youtube.com/embed/x_7YlGv9u1g",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.094Z",
+    "tags": "wrestling,daughters,sports,india,inspirational",
+    "categories": [
+      3
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 3,
+  "fields": {
+    "title": "Inception",
+    "slug": "inception",
+    "description": "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.",
+    "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+    "director": "Christopher Nolan",
+    "duration_minutes": 148,
+    "release_date": "2010-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "8.8",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+    "trailer_url": "https://www.youtube.com/embed/YoHD9XEInc0",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.028Z",
+    "tags": "dreams,heist,mind,layers,nolan",
+    "categories": [
+      8,
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 2,
+  "fields": {
+    "title": "The Dark Knight",
+    "slug": "the-dark-knight",
+    "description": "Batman must accept one of the greatest tests of his ability to fight injustice when the Joker unleashes chaos on Gotham.",
+    "cast": "Christian Bale, Heath Ledger, Aaron Eckhart",
+    "director": "Christopher Nolan",
+    "duration_minutes": 152,
+    "release_date": "2008-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "9.0",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "trailer_url": "https://www.youtube.com/embed/EXeTwQWrcwY",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.021Z",
+    "tags": "batman,joker,gotham,superhero,villain",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 1,
+  "fields": {
+    "title": "The Godfather",
+    "slug": "the-godfather",
+    "description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+    "cast": "Marlon Brando, Al Pacino, James Caan",
+    "director": "Francis Ford Coppola",
+    "duration_minutes": 175,
+    "release_date": "1972-06-15",
+    "language": "english",
+    "rating": "A",
+    "imdb_score": "9.2",
+    "poster": "posters/The-Godfather.webp",
+    "poster_url": "https://www.peakpx.com/en/hd-wallpaper-desktop-gkkel",
+    "trailer_url": "https://www.youtube.com/embed/K0eDlFX9GMc",
+    "is_active": false,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.014Z",
+    "tags": "mafia,family,loyalty,power,classic",
+    "categories": [
+      2
+    ]
+  }
+}
+]

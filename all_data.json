@@ -1,0 +1,3522 @@
+[
+{
+  "model": "movies.category",
+  "pk": 1,
+  "fields": {
+    "name": "action",
+    "slug": "action",
+    "icon": "💥"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 10,
+  "fields": {
+    "name": "animation",
+    "slug": "animation",
+    "icon": "🎨"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 5,
+  "fields": {
+    "name": "comedy",
+    "slug": "comedy",
+    "icon": "😂"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 2,
+  "fields": {
+    "name": "crime",
+    "slug": "crime",
+    "icon": "🔍"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 6,
+  "fields": {
+    "name": "drama",
+    "slug": "drama",
+    "icon": "🎭"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 3,
+  "fields": {
+    "name": "family",
+    "slug": "family",
+    "icon": "👨‍👩‍👧"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 4,
+  "fields": {
+    "name": "horror",
+    "slug": "horror",
+    "icon": "👻"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 9,
+  "fields": {
+    "name": "romance",
+    "slug": "romance",
+    "icon": "❤️"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 8,
+  "fields": {
+    "name": "sci_fi",
+    "slug": "sci-fi",
+    "icon": "🚀"
+  }
+},
+{
+  "model": "movies.category",
+  "pk": 7,
+  "fields": {
+    "name": "thriller",
+    "slug": "thriller",
+    "icon": "😰"
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 15,
+  "fields": {
+    "title": "Youth",
+    "slug": "youth",
+    "description": "Youth follows 15-year-old Praveen as he enters adolescence determined to find true love before school ends. Through a series of relationships, friendships, and heartbreaks, he gradually discovers the true meaning of love, shaping his maturity and outlook on life.",
+    "cast": "Ken Karunas, Anishma Anilkumar, Devadarshini, Suraj Venjaramoodu, Priyanshi Yadav, Meenakshi Dinesh, Abison Thevarasa",
+    "director": "Ken Karunas",
+    "duration_minutes": 142,
+    "release_date": "2026-03-27",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "9.7",
+    "poster": "posters/youth.jpg",
+    "poster_url": "https://i.ytimg.com/vi/T372cZK4C6c/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDJ0altKbXNbmQO53huUgxtJJVNBw",
+    "trailer_url": "https://www.youtube.com/embed/VDfU3pLaGdg",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T18:02:17.675Z",
+    "tags": "youth movie, telugu romantic movie, teenage love story, 2026 movie, comedy drama romance, coming of age, indian cinema, love story",
+    "categories": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 20,
+  "fields": {
+    "title": "Happy Raj",
+    "slug": "happy-raj",
+    "description": "Happy Raj is a heartfelt comedy-drama romantic entertainer starring G. V. Prakash Kumar, Abbas, and Sri Gouri Priya in lead roles. The film blends humor, emotions, and romance, following the life journey of Raj and the relationships that shape his world.",
+    "cast": "G. V. Prakash Kumar, Abbas, Sri Gouri Priya, George Maryan, Geetha Kailasam, Adhirchi Arun, Madurai Muthu, Mahesh Devi, Prathana Nathan",
+    "director": "Maria Raja Elanchezian",
+    "duration_minutes": 156,
+    "release_date": "2026-03-27",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "9.5",
+    "poster": "posters/happy_raj.jpg",
+    "poster_url": "https://www.instagram.com/p/DSfdPiVAduW/",
+    "trailer_url": "https://www.youtube.com/embed/zjTfCC6ZrSU",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T20:52:15.815Z",
+    "tags": "happy raj movie, gv prakash kumar, tamil romantic comedy, telugu dubbed movie, comedy drama romance, 2026 movie release",
+    "categories": [
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 22,
+  "fields": {
+    "title": "Band Melam",
+    "slug": "band-melam",
+    "description": "Giri and Raaji grew up together in a small village; their love and bonding also grew, but changing fortunes and misunderstandings drove them and their families apart. While Raaji moves ahead with her studies, Giri searches for his path through music with his village band. Life takes them in completely different directions until circumstances bring them face to face again. What really unfolds between them forms the rest of the story.",
+    "cast": "Harsh Roshan, Sridevi Apalla, Saikumar Pudipeddi",
+    "director": "Sathish Javvaji",
+    "duration_minutes": 141,
+    "release_date": "2026-03-26",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "9.4",
+    "poster": "posters/bandmelam1.avif",
+    "poster_url": "https://www.harkins.com/movies/band-melam-telugu-subtitled/2026-03-29",
+    "trailer_url": "https://www.youtube.com/embed/DHu2ZHqBJek",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-30T10:03:22.897Z",
+    "tags": "band melam, telugu, drama, romance, village love story, music, 2026",
+    "categories": [
+      6
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 14,
+  "fields": {
+    "title": "Dhurandhar The Revenge",
+    "slug": "dhurandhar-the-revenge",
+    "description": "Dhurandhar The Revenge introduces Jaskirat Singh Rangi, tracing the chain of events that compel him to become Hamza Ali Mazari, and follows his rise as he operates deep inside Pakistan. The film is set to return this time in Hindi, Telugu, Tamil, Kannada and Malayalam.",
+    "cast": "Ranveer Singh, Sanjay Dutt, R. Madhavan, Arjun Rampal, Sara Arjun, Rakesh Bedi, Danish Pandor, Saumya Tandon",
+    "director": "Aditya Dhar",
+    "duration_minutes": 229,
+    "release_date": "2026-03-19",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "9.5",
+    "poster": "posters/dhurandhar-the-revenge-poster-detail-1773918029.avif",
+    "poster_url": "https://lh5.googleusercontent.com/proxy/_mbLTW92JCM-BAdKCkn566LWKxhuPuCDgQj17id8u61DunBiiW-UxWP2Yo-tRSC_qd0pV4BAvhjFMZQBhh7xgwT3ieQ6si8PWZ-9t1_qiNVd-9cPyWDqBiCLbL4Ijg",
+    "trailer_url": "https://www.youtube.com/embed/rV6kEsAyrdY",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T13:23:31.231Z",
+    "tags": "action, thriller, spy, pakistan, ranveer singh, aditya dhar, telugu, bollywood, undercover, revenge",
+    "categories": [
+      1,
+      10,
+      5,
+      2,
+      6,
+      3,
+      4,
+      9,
+      8,
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 18,
+  "fields": {
+    "title": "Ustaad Bhagat Singh",
+    "slug": "ustaad-bhagat-singh",
+    "description": "Inspired by his teacher, who named him Bhagat Singh and shaped his values, a tribal boy grows into a fearless man rooted in strong morals and unwavering courage. Standing firm against injustice, he takes on powerful forces despite overwhelming odds. Ustaad Bhagat Singh is a story of strength, integrity, and purpose.",
+    "cast": "Pawan Kalyan, Sreeleela, Raashi Khanna, Parthiban, Rao Ramesh, K. S. Ravikumar, Ramki",
+    "director": "Harish Shankar",
+    "duration_minutes": 154,
+    "release_date": "2026-03-19",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "7.5",
+    "poster": "posters/ustaad_bhagat_singh.jpg",
+    "poster_url": "https://in.pinterest.com/pin/ustaad-bhagat-singh-movie-poster-hd--633248397645371440/",
+    "trailer_url": "https://www.youtube.com/embed/MLU5ZEp9YDo",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T20:01:58.333Z",
+    "tags": "pawan kalyan movie, ustaad bhagat singh, telugu action movie, harish shankar film, mass entertainer, commercial cinema, dsp music, 2026 release, indian cinema",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 4,
+  "fields": {
+    "title": "Oppenheimer",
+    "slug": "oppenheimer",
+    "description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+    "cast": "Cillian Murphy, Emily Blunt, Robert Downey Jr.",
+    "director": "Christopher Nolan",
+    "duration_minutes": 180,
+    "release_date": "2023-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "8.9",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+    "trailer_url": "https://www.youtube.com/embed/uYPbbksJxIg",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.039Z",
+    "tags": "atomic,bomb,war,scientist,history",
+    "categories": [
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 8,
+  "fields": {
+    "title": "RRR",
+    "slug": "rrr",
+    "description": "A fictitious story about two legendary revolutionaries and their journey away from home before they began the fight for their nation.",
+    "cast": "N.T. Rama Rao Jr., Ram Charan, Alia Bhatt",
+    "director": "S.S. Rajamouli",
+    "duration_minutes": 187,
+    "release_date": "2022-06-15",
+    "language": "telugu",
+    "rating": "UA",
+    "imdb_score": "7.9",
+    "poster": "posters/RRR-2022.jpeg",
+    "poster_url": "https://4kwallpapers.com/movies/rrr-ram-charan-alluri-sitarama-raju-telugu-movie-indian-7770.html",
+    "trailer_url": "https://www.youtube.com/embed/2_BkCz3OnlY",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.066Z",
+    "tags": "revolution,friendship,british-raj,telugu,period",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 9,
+  "fields": {
+    "title": "Pushpa: The Rise",
+    "slug": "pushpa-the-rise",
+    "description": "A laborer rises through the ranks of a red sandalwood smuggling syndicate.",
+    "cast": "Allu Arjun, Fahadh Faasil, Rashmika Mandanna",
+    "director": "Sukumar",
+    "duration_minutes": 179,
+    "release_date": "2021-06-15",
+    "language": "telugu",
+    "rating": "A",
+    "imdb_score": "7.6",
+    "poster": "posters/pushpa-the-rise-2021-movie.jpg",
+    "poster_url": "https://image.tmdb.org/t/p/w500/r9oEXsGzM3HqXvFVjn8MVEkfDx4.jpg",
+    "trailer_url": "https://www.youtube.com/embed/Q1NKMPhP8PY",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.073Z",
+    "tags": "smuggling,jungle,red-sanders,mass,telugu",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 12,
+  "fields": {
+    "title": "Dangal",
+    "slug": "dangal",
+    "description": "Former wrestler Mahavir Singh Phogat trains his daughters to become world-class wrestlers.",
+    "cast": "Aamir Khan, Fatima Sana Shaikh, Sanya Malhotra",
+    "director": "Nitesh Tiwari",
+    "duration_minutes": 161,
+    "release_date": "2016-06-15",
+    "language": "hindi",
+    "rating": "U",
+    "imdb_score": "8.4",
+    "poster": "posters/dangalposter.jpg",
+    "poster_url": "https://image.tmdb.org/t/p/w500/yjjet2M6Gq41C4s2b5xVNX8vLi9.jpg",
+    "trailer_url": "https://www.youtube.com/embed/x_7YlGv9u1g",
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.094Z",
+    "tags": "wrestling,daughters,sports,india,inspirational",
+    "categories": [
+      3
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 3,
+  "fields": {
+    "title": "Inception",
+    "slug": "inception",
+    "description": "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.",
+    "cast": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+    "director": "Christopher Nolan",
+    "duration_minutes": 148,
+    "release_date": "2010-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "8.8",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
+    "trailer_url": "https://www.youtube.com/embed/YoHD9XEInc0",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.028Z",
+    "tags": "dreams,heist,mind,layers,nolan",
+    "categories": [
+      8,
+      7
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 2,
+  "fields": {
+    "title": "The Dark Knight",
+    "slug": "the-dark-knight",
+    "description": "Batman must accept one of the greatest tests of his ability to fight injustice when the Joker unleashes chaos on Gotham.",
+    "cast": "Christian Bale, Heath Ledger, Aaron Eckhart",
+    "director": "Christopher Nolan",
+    "duration_minutes": 152,
+    "release_date": "2008-06-15",
+    "language": "english",
+    "rating": "UA",
+    "imdb_score": "9.0",
+    "poster": "",
+    "poster_url": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "trailer_url": "https://www.youtube.com/embed/EXeTwQWrcwY",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-03-29T06:02:28.021Z",
+    "tags": "batman,joker,gotham,superhero,villain",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "movies.movie",
+  "pk": 1,
+  "fields": {
+    "title": "The Godfather",
+    "slug": "the-godfather",
+    "description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+    "cast": "Marlon Brando, Al Pacino, James Caan",
+    "director": "Francis Ford Coppola",
+    "duration_minutes": 175,
+    "release_date": "1972-06-15",
+    "language": "english",
+    "rating": "A",
+    "imdb_score": "9.2",
+    "poster": "posters/The-Godfather.webp",
+    "poster_url": "https://www.peakpx.com/en/hd-wallpaper-desktop-gkkel",
+    "trailer_url": "https://www.youtube.com/embed/K0eDlFX9GMc",
+    "is_active": false,
+    "is_featured": false,
+    "created_at": "2026-03-29T06:02:28.014Z",
+    "tags": "mafia,family,loyalty,power,classic",
+    "categories": [
+      2
+    ]
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 297,
+  "fields": {
+    "movie": 18,
+    "screen": 1,
+    "show_date": "2026-03-19",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:07:21.646Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 298,
+  "fields": {
+    "movie": 18,
+    "screen": 3,
+    "show_date": "2026-03-19",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:07:36.325Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 299,
+  "fields": {
+    "movie": 18,
+    "screen": 25,
+    "show_date": "2026-03-19",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:08:29.075Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 300,
+  "fields": {
+    "movie": 18,
+    "screen": 28,
+    "show_date": "2026-03-19",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:09:11.611Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 313,
+  "fields": {
+    "movie": 20,
+    "screen": 25,
+    "show_date": "2026-03-26",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T06:49:12.206Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 315,
+  "fields": {
+    "movie": 22,
+    "screen": 1,
+    "show_date": "2026-03-26",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T10:13:46.812Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 316,
+  "fields": {
+    "movie": 22,
+    "screen": 3,
+    "show_date": "2026-03-27",
+    "show_time": "10:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T10:14:08.405Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 308,
+  "fields": {
+    "movie": 20,
+    "screen": 1,
+    "show_date": "2026-03-27",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:55:11.565Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 309,
+  "fields": {
+    "movie": 20,
+    "screen": 25,
+    "show_date": "2026-03-27",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:55:32.447Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 319,
+  "fields": {
+    "movie": 22,
+    "screen": 1,
+    "show_date": "2026-03-27",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:39:50.272Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 318,
+  "fields": {
+    "movie": 22,
+    "screen": 1,
+    "show_date": "2026-03-28",
+    "show_time": "10:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:38:03.259Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 317,
+  "fields": {
+    "movie": 22,
+    "screen": 1,
+    "show_date": "2026-03-28",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:37:32.094Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 320,
+  "fields": {
+    "movie": 22,
+    "screen": 3,
+    "show_date": "2026-03-28",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:41:46.429Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 1,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.256Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 10,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.304Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 19,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.343Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 28,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.374Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 64,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.515Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 73,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.546Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 100,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.629Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 118,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.685Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 127,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.713Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 136,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.749Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 145,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.784Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 181,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.942Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 190,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.977Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 217,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.087Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 235,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.197Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 244,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.231Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 253,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.267Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 262,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-29",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.301Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 2,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.259Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 11,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.309Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 20,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.346Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 29,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.377Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 65,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.518Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 74,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.549Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 101,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.632Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 119,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.688Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 128,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.716Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 137,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.752Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 146,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.789Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 182,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.946Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 191,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.981Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 218,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.092Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 236,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.201Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 245,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.234Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 254,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.271Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 263,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-29",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.305Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 3,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.262Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 12,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.312Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 21,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.350Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 30,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.381Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 66,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.522Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 75,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.552Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 102,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.635Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 120,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.691Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 129,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.719Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 138,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.758Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 147,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.792Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 183,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.950Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 192,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.985Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 219,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.099Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 237,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.207Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 246,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.239Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 255,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.275Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 264,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-29",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.308Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 4,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.265Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 13,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.316Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 22,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.354Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 31,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.384Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 67,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.526Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 76,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.555Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 103,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.639Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 121,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.695Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 130,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.722Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 139,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.761Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 148,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.796Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 184,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.954Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 193,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.990Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 220,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.106Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 238,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.211Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 247,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.244Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 256,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.278Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 265,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-30",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.311Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 5,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.269Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 14,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.327Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 23,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.357Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 32,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.389Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 68,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.529Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 77,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.558Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 104,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.642Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 122,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.698Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 131,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.726Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 140,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.764Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 149,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.799Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 185,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.958Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 194,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.993Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 221,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.112Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 239,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.214Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 248,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.248Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 257,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.282Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 266,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-30",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.315Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 6,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.274Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 15,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.331Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 24,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.360Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 33,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.393Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 69,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.533Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 78,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.562Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 105,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.645Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 123,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.701Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 132,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.731Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 141,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.767Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 150,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.802Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 186,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.961Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 195,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.996Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 222,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.118Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 240,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.217Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 249,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.251Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 258,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.286Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 267,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-30",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.318Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 321,
+  "fields": {
+    "movie": 22,
+    "screen": 25,
+    "show_date": "2026-03-30",
+    "show_time": "21:12:21",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:42:23.910Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 358,
+  "fields": {
+    "movie": 22,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "00:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:19:29.323Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 324,
+  "fields": {
+    "movie": 14,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "06:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:45:02.911Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 366,
+  "fields": {
+    "movie": 18,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "06:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:23:29.749Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 289,
+  "fields": {
+    "movie": 14,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "10:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T13:32:11.671Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 302,
+  "fields": {
+    "movie": 18,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "10:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:12:18.030Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 7,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.293Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 16,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.334Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 25,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.363Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 34,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.407Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 70,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.536Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 79,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.565Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 106,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.648Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 124,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.704Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 133,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.735Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 142,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.773Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 151,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.807Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 187,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.965Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 196,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.999Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 223,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.123Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 241,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.222Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 250,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.255Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 259,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.291Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 268,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-31",
+    "show_time": "10:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.322Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 322,
+  "fields": {
+    "movie": 22,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:43:21.026Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 323,
+  "fields": {
+    "movie": 14,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:44:24.197Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 327,
+  "fields": {
+    "movie": 14,
+    "screen": 29,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:46:07.911Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 337,
+  "fields": {
+    "movie": 14,
+    "screen": 30,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:50:30.629Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 340,
+  "fields": {
+    "movie": 14,
+    "screen": 46,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:51:48.309Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 351,
+  "fields": {
+    "movie": 20,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:17:02.233Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 365,
+  "fields": {
+    "movie": 18,
+    "screen": 3,
+    "show_date": "2026-03-31",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:22:53.843Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 8,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.297Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 17,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.337Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 26,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.367Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 35,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.410Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 71,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.539Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 80,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.568Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 107,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.651Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 125,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.707Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 134,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.740Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 143,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.778Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 152,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.819Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 188,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.968Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 197,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.003Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 224,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.127Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 242,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.225Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 251,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.260Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 260,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.295Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 269,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.326Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 290,
+  "fields": {
+    "movie": 14,
+    "screen": 36,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T13:36:50.042Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 291,
+  "fields": {
+    "movie": 15,
+    "screen": 26,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T19:23:21.743Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 292,
+  "fields": {
+    "movie": 15,
+    "screen": 11,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T19:23:59.499Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 301,
+  "fields": {
+    "movie": 18,
+    "screen": 37,
+    "show_date": "2026-03-31",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T20:11:15.111Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 314,
+  "fields": {
+    "movie": 20,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T06:50:34.079Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 332,
+  "fields": {
+    "movie": 14,
+    "screen": 3,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:48:23.494Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 338,
+  "fields": {
+    "movie": 14,
+    "screen": 30,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:50:47.769Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 343,
+  "fields": {
+    "movie": 15,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:13:26.080Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 357,
+  "fields": {
+    "movie": 22,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:18:57.950Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 368,
+  "fields": {
+    "movie": 18,
+    "screen": 11,
+    "show_date": "2026-03-31",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:23:59.792Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 9,
+  "fields": {
+    "movie": 1,
+    "screen": 1,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.301Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 18,
+  "fields": {
+    "movie": 2,
+    "screen": 2,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.340Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 27,
+  "fields": {
+    "movie": 3,
+    "screen": 3,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.370Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 36,
+  "fields": {
+    "movie": 4,
+    "screen": 4,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.414Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 72,
+  "fields": {
+    "movie": 8,
+    "screen": 8,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.542Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 81,
+  "fields": {
+    "movie": 9,
+    "screen": 9,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.571Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 108,
+  "fields": {
+    "movie": 12,
+    "screen": 12,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.654Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 126,
+  "fields": {
+    "movie": 1,
+    "screen": 14,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.710Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 135,
+  "fields": {
+    "movie": 2,
+    "screen": 15,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.745Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 144,
+  "fields": {
+    "movie": 3,
+    "screen": 16,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.781Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 153,
+  "fields": {
+    "movie": 4,
+    "screen": 17,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.823Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 189,
+  "fields": {
+    "movie": 8,
+    "screen": 21,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:28.973Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 198,
+  "fields": {
+    "movie": 9,
+    "screen": 22,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.006Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 225,
+  "fields": {
+    "movie": 12,
+    "screen": 25,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.131Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 243,
+  "fields": {
+    "movie": 1,
+    "screen": 27,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.228Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 252,
+  "fields": {
+    "movie": 2,
+    "screen": 28,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "150.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.263Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 261,
+  "fields": {
+    "movie": 3,
+    "screen": 29,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "180.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.298Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 270,
+  "fields": {
+    "movie": 4,
+    "screen": 30,
+    "show_date": "2026-03-31",
+    "show_time": "18:30:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-29T06:02:29.329Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 345,
+  "fields": {
+    "movie": 15,
+    "screen": 27,
+    "show_date": "2026-04-01",
+    "show_time": "06:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:14:31.065Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 326,
+  "fields": {
+    "movie": 14,
+    "screen": 27,
+    "show_date": "2026-04-01",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:45:47.629Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 335,
+  "fields": {
+    "movie": 14,
+    "screen": 40,
+    "show_date": "2026-04-01",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:49:29.426Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 344,
+  "fields": {
+    "movie": 15,
+    "screen": 25,
+    "show_date": "2026-04-01",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:13:45.258Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 367,
+  "fields": {
+    "movie": 18,
+    "screen": 26,
+    "show_date": "2026-04-01",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:23:45.974Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 325,
+  "fields": {
+    "movie": 14,
+    "screen": 25,
+    "show_date": "2026-04-01",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:45:26.362Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 328,
+  "fields": {
+    "movie": 14,
+    "screen": 33,
+    "show_date": "2026-04-01",
+    "show_time": "14:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:47:03.463Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 331,
+  "fields": {
+    "movie": 14,
+    "screen": 1,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:48:04.928Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 336,
+  "fields": {
+    "movie": 14,
+    "screen": 7,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:49:48.560Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 352,
+  "fields": {
+    "movie": 20,
+    "screen": 25,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:17:23.125Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 359,
+  "fields": {
+    "movie": 22,
+    "screen": 26,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:19:45.526Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 371,
+  "fields": {
+    "movie": 18,
+    "screen": 30,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:24:54.649Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 375,
+  "fields": {
+    "movie": 18,
+    "screen": 59,
+    "show_date": "2026-04-01",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:26:22.780Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 339,
+  "fields": {
+    "movie": 14,
+    "screen": 42,
+    "show_date": "2026-04-02",
+    "show_time": "00:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:51:20.163Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 347,
+  "fields": {
+    "movie": 15,
+    "screen": 29,
+    "show_date": "2026-04-02",
+    "show_time": "00:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:15:13.687Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 360,
+  "fields": {
+    "movie": 22,
+    "screen": 15,
+    "show_date": "2026-04-02",
+    "show_time": "00:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:20:04.106Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 329,
+  "fields": {
+    "movie": 14,
+    "screen": 25,
+    "show_date": "2026-04-02",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:47:29.880Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 330,
+  "fields": {
+    "movie": 14,
+    "screen": 28,
+    "show_date": "2026-04-02",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:47:48.607Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 353,
+  "fields": {
+    "movie": 20,
+    "screen": 27,
+    "show_date": "2026-04-02",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:17:41.229Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 369,
+  "fields": {
+    "movie": 18,
+    "screen": 15,
+    "show_date": "2026-04-02",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:24:20.293Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 370,
+  "fields": {
+    "movie": 18,
+    "screen": 19,
+    "show_date": "2026-04-02",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:24:36.760Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 346,
+  "fields": {
+    "movie": 15,
+    "screen": 28,
+    "show_date": "2026-04-03",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:14:51.522Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 354,
+  "fields": {
+    "movie": 20,
+    "screen": 36,
+    "show_date": "2026-04-03",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:18:00.409Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 333,
+  "fields": {
+    "movie": 14,
+    "screen": 25,
+    "show_date": "2026-04-03",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:48:43.751Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 362,
+  "fields": {
+    "movie": 22,
+    "screen": 29,
+    "show_date": "2026-04-03",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:20:45.221Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 373,
+  "fields": {
+    "movie": 18,
+    "screen": 27,
+    "show_date": "2026-04-03",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:25:34.788Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 334,
+  "fields": {
+    "movie": 14,
+    "screen": 27,
+    "show_date": "2026-04-04",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:49:01.911Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 349,
+  "fields": {
+    "movie": 15,
+    "screen": 27,
+    "show_date": "2026-04-04",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:15:59.620Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 361,
+  "fields": {
+    "movie": 22,
+    "screen": 25,
+    "show_date": "2026-04-04",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:20:28.547Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 372,
+  "fields": {
+    "movie": 18,
+    "screen": 44,
+    "show_date": "2026-04-04",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:25:15.246Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 341,
+  "fields": {
+    "movie": 14,
+    "screen": 59,
+    "show_date": "2026-04-05",
+    "show_time": "06:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:52:16.341Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 355,
+  "fields": {
+    "movie": 20,
+    "screen": 46,
+    "show_date": "2026-04-05",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:18:19.409Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 364,
+  "fields": {
+    "movie": 22,
+    "screen": 26,
+    "show_date": "2026-04-05",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:22:03.388Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 348,
+  "fields": {
+    "movie": 15,
+    "screen": 36,
+    "show_date": "2026-04-05",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:15:32.924Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 374,
+  "fields": {
+    "movie": 18,
+    "screen": 59,
+    "show_date": "2026-04-05",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:25:55.130Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 350,
+  "fields": {
+    "movie": 15,
+    "screen": 26,
+    "show_date": "2026-04-06",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:16:19.044Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 356,
+  "fields": {
+    "movie": 20,
+    "screen": 38,
+    "show_date": "2026-04-06",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:18:39.426Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 363,
+  "fields": {
+    "movie": 22,
+    "screen": 63,
+    "show_date": "2026-04-06",
+    "show_time": "12:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:21:15.838Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 342,
+  "fields": {
+    "movie": 14,
+    "screen": 74,
+    "show_date": "2026-04-06",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T15:52:43.578Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 376,
+  "fields": {
+    "movie": 18,
+    "screen": 25,
+    "show_date": "2026-04-06",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:26:53.214Z"
+  }
+},
+{
+  "model": "movies.show",
+  "pk": 377,
+  "fields": {
+    "movie": 18,
+    "screen": 27,
+    "show_date": "2026-04-07",
+    "show_time": "18:00:00",
+    "ticket_price": "200.00",
+    "is_active": true,
+    "created_at": "2026-03-30T17:27:12.425Z"
+  }
+}
+]
