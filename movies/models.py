@@ -78,11 +78,11 @@ class Movie(models.Model):
         return self.title
 
     def get_poster_url(self):
-        """Return poster URL - uploaded or external"""
+        if self.poster_url:
+            return self.poster_url
         if self.poster:
             return self.poster.url
-        return self.poster_url or '/static/images/default_poster.jpg'
-
+        return '/static/images/default_poster.jpg'
     def get_cast_list(self):
         return [c.strip() for c in self.cast.split(',') if c.strip()]
 
