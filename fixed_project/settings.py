@@ -12,7 +12,6 @@ SECRET_KEY = 'django-insecure-smart-movie-booking-secret-key-change-in-productio
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,13 +19,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Project apps
+    'cloudinary_storage',   
+    'cloudinary',
     'movies',
     'bookings',
     'accounts',
     'admin_panel',
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
