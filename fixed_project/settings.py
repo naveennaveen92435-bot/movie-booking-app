@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'bookings',
     'accounts',
     'admin_panel',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -97,3 +99,11 @@ SEAT_HOLD_MINUTES = 10     # Seat lock timer
 
 # Email backend (console for development)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Cloudinary Settings
+import cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'deg2lhudi',
+    'API_KEY': '591213154712188',
+    'API_SECRET': 'ikkade_mee_full_secret_paste_cheyyandi',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
