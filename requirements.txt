@@ -1,7 +1,0 @@
-Django
-gunicorn
-whitenoise
-Pillow
-razorpay
-dj-database-url
-psycopg2-binary
