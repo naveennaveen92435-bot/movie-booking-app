@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-change-this')
-
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -14,6 +14,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
     'https://movie-booking-app-nlr1.onrender.com'
 ]
 INSTALLED_APPS = [
@@ -103,8 +105,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 WHITENOISE_AUTOREFRESH = True
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

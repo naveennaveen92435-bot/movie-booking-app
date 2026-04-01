@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = 'django-insecure-smart-movie-booking-secret-key-change-in-production'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
@@ -118,3 +118,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'it6dAj6fuU94K1jNz_gf4I5PTL4',
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Razorpay test keys (local development)
+RAZORPAY_KEY_ID = 'test_key'
+RAZORPAY_KEY_SECRET = 'test_secret'
